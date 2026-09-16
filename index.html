@@ -65,7 +65,7 @@
 
         <!-- Mercado Livre Logo (Uploaded Image) -->
         <a href="#" class="flex shrink-0 items-center gap-1.5 hover:opacity-95 transition-opacity" aria-label="Mercado Livre">
-          <img src="images/logo.png" alt="Mercado Livre" class="h-8 sm:h-9 w-auto object-contain">
+          <img src="images/logo.png" alt="Mercado Livre" class="h-10 sm:h-11 md:h-12 w-auto object-contain transition-transform hover:scale-105">
         </a>
 
         <!-- Search Bar -->
@@ -369,7 +369,7 @@
                 <p class="text-emerald-600 font-medium flex items-center gap-1">
                   <i data-lucide="award" class="w-3.5 h-3.5"></i> MercadoLíder Platinum
                 </p>
-                <p class="text-gray-500 mt-0.5">+5 mil vendas · São Paulo, SP</p>
+                <p class="text-gray-500 mt-0.5">+5 mil vendas · Mirassol, SP</p>
               </div>
             </div>
 
@@ -858,11 +858,35 @@
       showToast("Link copiado para a área de transferência!");
     }
 
-    // CEP Shipping
+    // CEP Shipping (Valores e dias aleatórios conforme o CEP sem asteriscos)
     function calcularFrete() {
-      const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
+      const cep = document.getElementById('cep-input').value.replace(/D/g, '');
       if (cep.length === 8) {
-        document.getElementById('frete-resultado').classList.remove('hidden');
+        const seed = parseInt(cep.slice(-4)) || Math.floor(Math.random() * 9000 + 1000);
+        const diasEcoMin = (seed % 3) + 3;
+        const diasEcoMax = diasEcoMin + (seed % 3) + 2;
+        const diasSedexMin = (seed % 2) + 1;
+        const diasSedexMax = diasSedexMin + (seed % 2) + 1;
+        const valorSedex = (25 + (seed % 28) + 0.90).toFixed(2).replace('.', ',');
+
+        const resEl = document.getElementById('frete-resultado');
+        resEl.innerHTML = `
+          <div class="flex items-center justify-between p-2.5 rounded-lg bg-emerald-50 text-emerald-900 border border-emerald-200">
+            <div>
+              <span class="font-medium">Frete Grátis (Econômico)</span>
+              <span class="block text-[11px] text-emerald-700">Chega em ${diasEcoMin} a ${diasEcoMax} dias úteis</span>
+            </div>
+            <span class="font-bold text-emerald-700">Grátis</span>
+          </div>
+          <div class="flex items-center justify-between p-2.5 rounded-lg bg-gray-100 text-gray-800 border border-gray-200">
+            <div>
+              <span class="font-medium">Sedex Expresso</span>
+              <span class="block text-[11px] text-gray-500">Chega em ${diasSedexMin} a ${diasSedexMax} dias úteis</span>
+            </div>
+            <span class="font-bold text-gray-900">R$ ${valorSedex}</span>
+          </div>
+        `;
+        resEl.classList.remove('hidden');
       } else {
         showToast("Digite um CEP válido com 8 dígitos.");
       }
@@ -923,11 +947,11 @@
 
     // CEP AutoFill
     document.getElementById('form-cep').addEventListener('blur', (e) => {
-      const val = e.target.value.replace(/\D/g, '');
+      const val = e.target.value.replace(/D/g, '');
       if (val.length === 8) {
-        document.getElementById('form-rua').value = "Avenida Paulista";
-        document.getElementById('form-bairro').value = "Bela Vista";
-        document.getElementById('form-cidade').value = "São Paulo";
+        document.getElementById('form-rua').value = "Rua Central";
+        document.getElementById('form-bairro').value = "Centro";
+        document.getElementById('form-cidade').value = "Mirassol";
       }
     });
   </script>

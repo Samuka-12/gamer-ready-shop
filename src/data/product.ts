@@ -84,7 +84,7 @@ export const product = {
     reputation: "MercadoLíder",
     sales: "+5 mil vendas",
     responseTime: "Responde rápido",
-    location: "São Paulo, SP",
+    location: "Mirassol, SP",
   },
   faq: [
     {

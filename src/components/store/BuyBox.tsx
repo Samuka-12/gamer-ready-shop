@@ -26,7 +26,8 @@ export function BuyBox({
   const [loading, setLoading] = useState(false);
 
   const simular = () => {
-    if (onlyDigits(cep).length !== 8) {
+    const rawCep = onlyDigits(cep);
+    if (rawCep.length !== 8) {
       setErro("Digite um CEP válido com 8 dígitos.");
       setFrete(null);
       return;
@@ -34,12 +35,19 @@ export function BuyBox({
     setErro("");
     setLoading(true);
     setTimeout(() => {
+      const seed = parseInt(rawCep.slice(-4)) || Math.floor(Math.random() * 9000 + 1000);
+      const diasEcoMin = (seed % 3) + 3;
+      const diasEcoMax = diasEcoMin + (seed % 3) + 2;
+      const diasSedexMin = (seed % 2) + 1;
+      const diasSedexMax = diasSedexMin + (seed % 2) + 1;
+      const valorSedex = parseFloat((25 + (seed % 30) + 0.90).toFixed(2));
+
       setFrete([
-        { nome: "Frete grátis (Econômico)", prazo: "Chega em 7 a 10 dias úteis", valor: 0 },
-        { nome: "Sedex", prazo: "Chega em 2 a 4 dias úteis", valor: 49.9 },
+        { nome: "Frete grátis (Econômico)", prazo: `Chega em ${diasEcoMin} a ${diasEcoMax} dias úteis`, valor: 0 },
+        { nome: "Sedex Expresso", prazo: `Chega em ${diasSedexMin} a ${diasSedexMax} dias úteis`, valor: valorSedex },
       ]);
       setLoading(false);
-    }, 700);
+    }, 500);
   };
 
   const max = Math.min(product.maxPorCompra, product.estoque);
