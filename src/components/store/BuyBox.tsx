@@ -35,12 +35,11 @@ export function BuyBox({
     setErro("");
     setLoading(true);
     setTimeout(() => {
-      const seed = parseInt(rawCep.slice(-4)) || Math.floor(Math.random() * 9000 + 1000);
-      const diasEcoMin = (seed % 3) + 3;
-      const diasEcoMax = diasEcoMin + (seed % 3) + 2;
-      const diasSedexMin = (seed % 2) + 1;
-      const diasSedexMax = diasSedexMin + (seed % 2) + 1;
-      const valorSedex = parseFloat((25 + (seed % 30) + 0.90).toFixed(2));
+      const diasEcoMin = Math.floor(Math.random() * 3) + 3; // 3, 4 ou 5
+      const diasEcoMax = Math.min(7, diasEcoMin + Math.floor(Math.random() * 3) + 1); // 4 a 7
+      const diasSedexMin = Math.max(1, diasEcoMin - 2);
+      const diasSedexMax = Math.max(2, diasEcoMax - 3);
+      const valorSedex = parseFloat((24 + Math.floor(Math.random() * 25) + 0.90).toFixed(2));
 
       setFrete([
         { nome: "Frete grátis (Econômico)", prazo: `Chega em ${diasEcoMin} a ${diasEcoMax} dias úteis`, valor: 0 },

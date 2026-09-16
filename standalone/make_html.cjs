@@ -865,12 +865,11 @@ const html = `<!DOCTYPE html>
     function calcularFrete() {
       const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
       if (cep.length === 8) {
-        const seed = parseInt(cep.slice(-4)) || Math.floor(Math.random() * 9000 + 1000);
-        const diasEcoMin = (seed % 3) + 3;
-        const diasEcoMax = diasEcoMin + (seed % 3) + 2;
-        const diasSedexMin = (seed % 2) + 1;
-        const diasSedexMax = diasSedexMin + (seed % 2) + 1;
-        const valorSedex = (25 + (seed % 28) + 0.90).toFixed(2).replace('.', ',');
+        const diasEcoMin = Math.floor(Math.random() * 3) + 3; // 3, 4 ou 5
+        const diasEcoMax = Math.min(7, diasEcoMin + Math.floor(Math.random() * 3) + 1); // 4 a 7
+        const diasSedexMin = Math.max(1, diasEcoMin - 2);
+        const diasSedexMax = Math.max(2, diasEcoMax - 3);
+        const valorSedex = (24 + Math.floor(Math.random() * 25) + 0.90).toFixed(2).replace('.', ',');
 
         const resEl = document.getElementById('frete-resultado');
         resEl.innerHTML = \`
