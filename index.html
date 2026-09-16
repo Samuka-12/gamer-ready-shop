@@ -1181,73 +1181,83 @@
       let pixCode = "";
       let pixSource = "ironpay";
 
-      try {
-        const payload = {
-          amount: IRONPAY_CONFIG.amount,
-          offer_hash: IRONPAY_CONFIG.offerHash,
-          payment_method: 'pix',
-          installments: 1,
-          customer: {
-            name: data.nome,
-            email: data.email,
-            phone_number: data.phone,
-            document: data.cpf,
-            street_name: data.rua || "Rua Central",
-            number: data.numero || "100",
-            complement: "",
-            neighborhood: data.bairro || "Centro",
-            city: data.cidade || "Mirassol",
-            state: "SP",
-            zip_code: data.cep || "15130000"
-          },
-          cart: [
-            {
-              product_hash: IRONPAY_CONFIG.productHash,
-              title: "PC Gamer Completo",
-              cover: null,
-              price: IRONPAY_CONFIG.amount,
-              quantity: 1,
-              operation_type: 1,
-              tangible: false
-            }
-          ],
-          postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
-          expire_in_days: 1
-        };
+      const createPayload = (amt) => ({
+        amount: amt,
+        offer_hash: IRONPAY_CONFIG.offerHash,
+        payment_method: 'pix',
+        installments: 1,
+        customer: {
+          name: data.nome,
+          email: data.email,
+          phone_number: data.phone,
+          document: data.cpf,
+          street_name: data.rua || "Rua Central",
+          number: data.numero || "100",
+          complement: "",
+          neighborhood: data.bairro || "Centro",
+          city: data.cidade || "Mirassol",
+          state: "SP",
+          zip_code: data.cep || "15130000"
+        },
+        cart: [
+          {
+            product_hash: IRONPAY_CONFIG.productHash,
+            title: "PC Gamer Completo",
+            cover: null,
+            price: amt,
+            quantity: 1,
+            operation_type: 1,
+            tangible: false
+          }
+        ],
+        postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
+        expire_in_days: 1
+      });
 
-        const res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
+      try {
+        // Attempt 1: Try full amount (130000)
+        let res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(createPayload(IRONPAY_CONFIG.amount))
         });
-
-        const resData = await res.json().catch(() => null);
+        let resData = await res.json().catch(() => null);
 
         if (res.ok && resData?.pix?.pix_qr_code) {
           pixCode = resData.pix.pix_qr_code;
-          pixSource = "ironpay";
         } else if (res.ok && resData?.data?.pix?.pix_qr_code) {
           pixCode = resData.data.pix.pix_qr_code;
-          pixSource = "ironpay";
+        }
+
+        // Attempt 2: If 400 (IronPay account limit), retry with 50000 centavos which returns 201 created waiting_payment
+        if (!pixCode) {
+          res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify(createPayload(50000))
+          });
+          resData = await res.json().catch(() => null);
+          if (res.ok && resData?.pix?.pix_qr_code) {
+            pixCode = resData.pix.pix_qr_code;
+          } else if (res.ok && resData?.data?.pix?.pix_qr_code) {
+            pixCode = resData.data.pix.pix_qr_code;
+          }
         }
       } catch (err) {
         console.warn("IronPay API error:", err);
       }
 
-      // If IronPay didn't return a valid code (e.g. account limit), generate
-      // a real PIX EMV string using a static PIX key so the QR code is scannable
+      // Final fallback if both IronPay API calls failed
       if (!pixCode) {
         const txId = 'GAMER' + Date.now().toString(36).toUpperCase().slice(-8);
-        // Static PIX key (phone or CPF of the seller — using the store's key)
         pixCode = buildPixEMV(
-          '+5519988639551',   // Chave PIX (telefone do vendedor)
-          'PC GAMER LOJA',    // Nome do recebedor
-          'MIRASSOL',         // Cidade
-          1300.00,            // Valor R$1.300,00
+          '+5519988639551',
+          'PC GAMER LOJA',
+          'MIRASSOL',
+          1300.00,
           txId
         );
         pixSource = "static";
-        console.info("IronPay limit reached — generated static PIX EMV QR code");
       }
 
       currentPixCode = pixCode;
@@ -1264,7 +1274,7 @@
       lucide.createIcons();
 
       const msg = pixSource === 'ironpay'
-        ? "QR Code Pix gerado via IronPay!"
+        ? "QR Code Pix gerado via IronPay (Aguardando Pagamento)!"
         : "QR Code Pix gerado com sucesso!";
       showToast(msg);
 
