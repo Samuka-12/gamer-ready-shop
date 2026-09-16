@@ -15,11 +15,11 @@ export const product = {
   breadcrumb: ["Início", "Informática", "PC Gamer", "Computadores"],
   images: [
     {
-      url: "https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp",
+      url: "/images/product-1.jpg",
       alt: "PC Gamer Completo com gabinete RGB, monitor, teclado, mouse e headset",
     },
     {
-      url: "https://http2.mlstatic.com/D_NQ_NP_2X_928296-MLA110076286300_042026-F.webp",
+      url: "/images/product-2.jpg",
       alt: "Detalhe do setup do PC Gamer Completo com iluminação RGB",
     },
   ],
@@ -28,8 +28,8 @@ export const product = {
   precoPromocional: 1300.0,
   percentualDesconto: 49,
   parcelamento: { vezes: 10, valor: 130.0, juros: false },
-  estoque: 8,
-  maxPorCompra: 5,
+  estoque: 1,
+  maxPorCompra: 1,
   highlights: [
     { title: "Radeon RX 580", subtitle: "Placa de vídeo dedicada", icon: "gpu" },
     { title: "Intel Core i5", subtitle: "Processador", icon: "cpu" },

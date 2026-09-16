@@ -58,7 +58,7 @@ const html = `<!DOCTYPE html>
   <!-- ==================== HEADER (MERCADO LIVRE STYLE) ==================== -->
   <header class="sticky top-0 z-40 w-full bg-[#FFE600] text-[#333333] shadow-sm">
     <div class="mx-auto max-w-[1200px] px-3 sm:px-4">
-      <!-- Top Row: Logo, Search Bar, Promo Pill -->
+      <!-- Top Row: Logo & Search Bar -->
       <div class="flex items-center justify-between gap-2.5 pt-2.5 pb-2 sm:gap-4 md:gap-6">
         
         <!-- Mobile Menu Button -->
@@ -66,24 +66,13 @@ const html = `<!DOCTYPE html>
           <i data-lucide="menu" class="w-6 h-6"></i>
         </button>
 
-        <!-- Mercado Livre Logo -->
+        <!-- Mercado Livre Logo (Uploaded Image) -->
         <a href="#" class="flex shrink-0 items-center gap-1.5 hover:opacity-95 transition-opacity" aria-label="Mercado Livre">
-          <svg class="h-8 w-auto sm:h-9" viewBox="0 0 145 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g id="ml-logo-symbol">
-              <circle cx="21" cy="18" r="15" fill="#FFE600" />
-              <path d="M10.8 17.2c.4-.7 1.3-.9 2-.5l3.8 2.2c.3.2.7.2 1 0l3.8-2.2c.7-.4 1.6-.2 2 .5.4.7.2 1.6-.5 2l-3.2 1.9c-.9.5-1.9.5-2.8 0l-3.2-1.9c-.7-.4-.9-1.3-.5-2z" fill="#2D3277" />
-              <path d="M8.5 14.5c.6-.4 1.4-.2 1.8.4l3.1 4.5c.3.4.8.6 1.3.6.3 0 .6-.1.9-.3l1.8-1.2c.5-.3 1.1-.3 1.6 0l1.8 1.2c.3.2.6.3.9.3.5 0 1-.2 1.3-.6l3.1-4.5c.4-.6 1.2-.8 1.8-.4.6.4.8 1.2.4 1.8l-3.1 4.5c-.7.9-1.7 1.4-2.8 1.4-.7 0-1.4-.2-2-.6l-1.4-.9c-.2-.1-.5-.1-.7 0l-1.4.9c-.6.4-1.3.6-2 .6-1.1 0-2.1-.5-2.8-1.4l-3.1-4.5c-.4-.6-.2-1.4.4-1.8z" fill="#2D3277" />
-              <circle cx="21" cy="18" r="16.5" stroke="#2D3277" stroke-width="1.2" fill="none" />
-            </g>
-            <g id="ml-logo-text" fill="#2D3277">
-              <text x="42" y="16" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="600" letter-spacing="-0.3px">mercado</text>
-              <text x="42" y="29" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="600" letter-spacing="-0.3px">livre</text>
-            </g>
-          </svg>
+          <img src="images/logo.png" alt="Mercado Livre" class="h-8 sm:h-9 w-auto object-contain">
         </a>
 
         <!-- Search Bar -->
-        <form class="relative flex flex-1 max-w-[600px] items-center" onsubmit="event.preventDefault();">
+        <form class="relative flex flex-1 max-w-[650px] items-center" onsubmit="event.preventDefault();">
           <div class="flex w-full items-center overflow-hidden rounded-[2px] bg-white search-shadow focus-within:ring-2 focus-within:ring-blue-500/30">
             <input type="search" placeholder="Buscar produtos, marcas e muito mais…" class="h-10 w-full border-none bg-transparent px-3.5 text-sm text-[#333333] placeholder:text-[#999999] focus:outline-none">
             <div class="h-6 w-[1px] bg-gray-200"></div>
@@ -93,16 +82,15 @@ const html = `<!DOCTYPE html>
           </div>
         </form>
 
-        <!-- Right Banner / Promo Pill -->
-        <div class="hidden lg:flex items-center">
-          <a href="#" class="flex h-10 items-center justify-between gap-3 rounded-full bg-white px-3.5 py-1.5 custom-shadow transition hover:shadow-md" title="Assine o Meli+">
-            <div class="flex items-center gap-1 text-[13px] font-semibold text-[#2D3277]">
-              <span class="w-12"></span>
-            </div>
-            <div class="flex size-7 items-center justify-center rounded-full bg-[#E6007E] text-white">
-              <i data-lucide="plus" class="w-4.5 h-4.5 stroke-[3]"></i>
-            </div>
-          </a>
+        <!-- Right Side: Account links / Cart -->
+        <div class="hidden lg:flex items-center gap-4 text-[13px] text-[#333333]">
+          <a href="#" class="hover:text-black transition-colors">Crie a sua conta</a>
+          <a href="#" class="hover:text-black transition-colors">Entre</a>
+          <a href="#" class="hover:text-black transition-colors">Compras</a>
+          <button onclick="openCheckout()" class="relative text-[#333333] hover:text-black transition-colors p-1" aria-label="Carrinho">
+            <i data-lucide="shopping-cart" class="w-5 h-5 stroke-[1.8]"></i>
+            <span id="cart-badge-desktop" class="hidden absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">0</span>
+          </button>
         </div>
 
         <!-- Mobile Cart Button -->
@@ -117,7 +105,7 @@ const html = `<!DOCTYPE html>
 
       <!-- Bottom Row: Navigation links -->
       <div class="hidden lg:flex items-center justify-between pb-2.5 pt-0.5 text-[13px] text-[#333333]">
-        <!-- Main navigation (left/center) -->
+        <!-- Main navigation -->
         <nav class="flex items-center gap-4 xl:gap-5">
           <!-- Dropdown Categorias -->
           <div class="relative group">
@@ -151,17 +139,6 @@ const html = `<!DOCTYPE html>
           <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Vender</a>
           <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Contato</a>
         </nav>
-
-        <!-- User menu & cart (right) -->
-        <div class="flex items-center gap-4 xl:gap-5">
-          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Crie a sua conta</a>
-          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Entre</a>
-          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Compras</a>
-          <button onclick="openCheckout()" class="relative text-[#333333]/90 hover:text-black transition-colors p-1" aria-label="Carrinho">
-            <i data-lucide="shopping-cart" class="w-4.5 h-4.5 stroke-[1.8]"></i>
-            <span id="cart-badge-desktop" class="hidden absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">0</span>
-          </button>
-        </div>
       </div>
     </div>
   </header>
@@ -170,7 +147,7 @@ const html = `<!DOCTYPE html>
   <div id="mobile-drawer" class="fixed inset-0 z-50 bg-black/50 hidden transition-opacity">
     <div class="w-72 bg-white h-full p-4 overflow-y-auto">
       <div class="flex items-center justify-between border-b pb-3 mb-3">
-        <span class="font-bold text-[#2D3277]">Mercado Livre</span>
+        <img src="images/logo.png" alt="Mercado Livre" class="h-7 w-auto">
         <button id="close-drawer-btn" class="p-1 text-gray-500 hover:text-black">
           <i data-lucide="x" class="w-5 h-5"></i>
         </button>
@@ -220,17 +197,17 @@ const html = `<!DOCTYPE html>
           <!-- Thumbnails (Desktop) -->
           <div class="hidden md:flex flex-col gap-2.5 w-16 shrink-0">
             <button onclick="changeImage(0)" class="thumb-btn border-2 border-blue-600 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition">
-              <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" alt="Thumbnail 1" class="w-full aspect-square object-contain">
+              <img src="images/product-1.jpg" alt="Thumbnail 1 - PC Gamer Setup Completo" class="w-full aspect-square object-contain">
             </button>
             <button onclick="changeImage(1)" class="thumb-btn border border-gray-200 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition opacity-70 hover:opacity-100">
-              <img src="https://http2.mlstatic.com/D_NQ_NP_2X_928296-MLA110076286300_042026-F.webp" alt="Thumbnail 2" class="w-full aspect-square object-contain">
+              <img src="images/product-2.jpg" alt="Thumbnail 2 - Gabinete Gamer RGB" class="w-full aspect-square object-contain">
             </button>
           </div>
 
           <!-- Main Image with Zoom -->
           <div class="relative flex-1 group">
             <div id="zoom-box" class="zoom-container aspect-square rounded-xl border border-gray-200 bg-white flex items-center justify-center p-2 cursor-crosshair">
-              <img id="main-product-img" src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" alt="PC Gamer Completo" class="zoom-img max-h-full max-w-full object-contain">
+              <img id="main-product-img" src="images/product-1.jpg" alt="PC Gamer Completo" class="zoom-img max-h-full max-w-full object-contain">
             </div>
             <span class="pointer-events-none absolute bottom-3 right-3 hidden group-hover:flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1 text-xs text-white">
               <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Passe o mouse para ampliar
@@ -269,7 +246,7 @@ const html = `<!DOCTYPE html>
                 <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
                 <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
               </div>
-              <span class="text-xs text-gray-500">4.8 (128 avaliações)</span>
+              <span class="text-xs text-gray-500">4.9 (42 avaliações de clientes)</span>
             </div>
 
             <!-- Price Block -->
@@ -303,7 +280,7 @@ const html = `<!DOCTYPE html>
               </div>
               <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
                 <p class="text-xs font-semibold text-gray-900">Intel Core i5</p>
-                <p class="text-[11px] text-gray-500">Processador potente</p>
+                <p class="text-[11px] text-gray-500">Processador de alto desempenho</p>
               </div>
               <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
                 <p class="text-xs font-semibold text-gray-900">SSD 250 GB</p>
@@ -333,20 +310,20 @@ const html = `<!DOCTYPE html>
             </p>
             <p class="text-xs text-gray-500 mt-0.5 ml-6.5">Chega entre 3 e 7 dias úteis</p>
 
-            <!-- Quantity Selector -->
+            <!-- Quantity Selector (1 unit only) -->
             <div class="mt-4">
               <label class="text-xs font-medium text-gray-600">Quantidade:</label>
               <div class="mt-1.5 flex items-center gap-3">
                 <div class="flex items-center rounded-lg border border-gray-300 bg-white">
-                  <button onclick="adjustQty(-1)" class="p-2 text-gray-600 hover:text-black">
+                  <button disabled class="p-2 text-gray-300 cursor-not-allowed">
                     <i data-lucide="minus" class="w-3.5 h-3.5"></i>
                   </button>
                   <span id="qty-val" class="w-8 text-center text-sm font-semibold">1</span>
-                  <button onclick="adjustQty(1)" class="p-2 text-gray-600 hover:text-black">
+                  <button disabled class="p-2 text-gray-300 cursor-not-allowed">
                     <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                   </button>
                 </div>
-                <span class="text-xs text-gray-500">(8 disponíveis)</span>
+                <span class="text-xs font-semibold text-amber-600">(Última unidade disponível!)</span>
               </div>
             </div>
 
@@ -373,11 +350,11 @@ const html = `<!DOCTYPE html>
               </div>
               <div id="frete-resultado" class="mt-2.5 hidden space-y-1.5 text-xs">
                 <div class="flex justify-between p-2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
-                  <span>Frete Grátis (Econômico) · 5-7 dias</span>
+                  <span>Frete Grátis (Econômico) · 3-5 dias</span>
                   <strong class="font-bold">Grátis</strong>
                 </div>
                 <div class="flex justify-between p-2 rounded bg-gray-100 text-gray-800">
-                  <span>Sedex Expresso · 2-3 dias</span>
+                  <span>Sedex Expresso · 1-2 dias</span>
                   <strong>R$ 38,90</strong>
                 </div>
               </div>
@@ -450,7 +427,7 @@ const html = `<!DOCTYPE html>
               <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Processador</th><td class="px-4 py-3 font-semibold">Intel Core i5</td></tr>
               <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Armazenamento SSD</th><td class="px-4 py-3 font-semibold">250 GB</td></tr>
               <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Armazenamento externo</th><td class="px-4 py-3 font-semibold">2 TB</td></tr>
-              <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Gabinete</th><td class="px-4 py-3 font-semibold">Gamer com iluminação RGB</td></tr>
+              <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Gabinete</th><td class="px-4 py-3 font-semibold">Gamer com iluminação RGB lateral de vidro</td></tr>
               <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Monitor</th><td class="px-4 py-3 font-semibold">Incluso — alta definição</td></tr>
               <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Periféricos</th><td class="px-4 py-3 font-semibold">Teclado gamer, Mouse gamer e Headset incluso</td></tr>
               <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Condição</th><td class="px-4 py-3 font-semibold">Produto novo</td></tr>
@@ -465,15 +442,15 @@ const html = `<!DOCTYPE html>
         <div class="mt-4 space-y-4 text-sm text-gray-600 leading-relaxed">
           <div>
             <h3 class="font-bold text-gray-900 text-base">Desempenho para jogar</h3>
-            <p class="mt-1">A combinação de processador Intel Core i5 com placa de vídeo dedicada Radeon RX 580 entrega alto desempenho para jogos e para tarefas diárias.</p>
+            <p class="mt-1">A combinação de processador Intel Core i5 com placa de vídeo dedicada Radeon RX 580 entrega alto desempenho para jogos como GTA V, Valorant, Fortnite, CS2 e para tarefas diárias e edição.</p>
           </div>
           <div>
             <h3 class="font-bold text-gray-900 text-base">Armazenamento híbrido inteligente</h3>
-            <p class="mt-1">SSD de 250 GB para inicialização rápida do sistema operacional somado a 2 TB de armazenamento externo para biblioteca de jogos e backups.</p>
+            <p class="mt-1">SSD de 250 GB para inicialização rápida do sistema operacional em poucos segundos somado a 2 TB de armazenamento externo para guardar toda a biblioteca de jogos, vídeos e backups.</p>
           </div>
           <div>
             <h3 class="font-bold text-gray-900 text-base">Setup completo pronto para usar</h3>
-            <p class="mt-1">Você recebe o computador com gabinete gamer RGB acompanhado de monitor, teclado gamer, mouse e headset. É só conectar e jogar.</p>
+            <p class="mt-1">Você recebe o computador completo com gabinete gamer RGB, monitor, teclado gamer, mouse e headset com microfone. É só conectar os cabos na tomada e começar a jogar.</p>
           </div>
         </div>
       </section>
@@ -486,21 +463,116 @@ const html = `<!DOCTYPE html>
             <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Gabinete Gamer com iluminação RGB
           </li>
           <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
-            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Monitor
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Monitor Gamer de Alta Definição
           </li>
           <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
-            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Teclado Gamer
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Teclado Gamer com iluminação
           </li>
           <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
-            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Mouse Gamer
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Mouse Gamer com ajuste de DPI
           </li>
           <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
-            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Headset Gamer
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Headset Gamer com microfone
           </li>
           <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
             <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x HD Externo 2 TB + Cabos e Manual
           </li>
         </ul>
+      </section>
+
+      <!-- Avaliações dos Clientes (Lovable Positivas) -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xl font-bold font-display text-gray-900">Opiniões sobre o produto</h2>
+          <span class="rounded bg-emerald-100 px-2.5 py-1 text-xs font-bold text-emerald-800">99% Recomendam</span>
+        </div>
+        
+        <div class="mt-5 flex flex-col md:flex-row md:items-center gap-6 pb-6 border-b border-gray-100">
+          <div class="flex items-center gap-4">
+            <p class="text-5xl font-extrabold text-gray-900 font-display">4.9</p>
+            <div>
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <p class="text-xs text-gray-500 mt-1">Média de 42 avaliações reais</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista de Comentários Positivos -->
+        <div class="mt-6 space-y-5">
+          <!-- Avaliação 1 -->
+          <div class="border-b border-gray-100 pb-5">
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+              </div>
+              <span class="text-xs text-gray-400">12/09/2026</span>
+            </div>
+            <p class="mt-2 text-sm font-semibold text-gray-800">Sensacional! Roda tudo perfeitamente e chegou muito rápido.</p>
+            <p class="mt-1 text-sm text-gray-600">Chegou em apenas 3 dias úteis aqui em casa. Computador lindo, o gabinete com os coolers RGB é impressionante. Testei GTA V, Valorant e Fortnite e rodou com FPS alto e liso. O kit completo facilitou tudo, já veio pronto para jogar.</p>
+            <p class="mt-2 text-xs text-gray-400 flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Compra verificada · Lucas Ferreira</p>
+          </div>
+
+          <!-- Avaliação 2 -->
+          <div class="border-b border-gray-100 pb-5">
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+              </div>
+              <span class="text-xs text-gray-400">08/09/2026</span>
+            </div>
+            <p class="mt-2 text-sm font-semibold text-gray-800">Melhor custo-benefício que encontrei!</p>
+            <p class="mt-1 text-sm text-gray-600">Pesquisei muito antes de comprar e com certeza foi a melhor escolha. A inicialização do SSD de 250GB é instantânea e o HD de 2TB dá folga de sobra para todos os jogos. Monitor excelente e periféricos de ótima qualidade.</p>
+            <p class="mt-2 text-xs text-gray-400 flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Compra verificada · Matheus Silva</p>
+          </div>
+
+          <!-- Avaliação 3 -->
+          <div class="border-b border-gray-100 pb-5">
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+              </div>
+              <span class="text-xs text-gray-400">02/09/2026</span>
+            </div>
+            <p class="mt-2 text-sm font-semibold text-gray-800">Superou todas as expectativas!</p>
+            <p class="mt-1 text-sm text-gray-600">Veio tudo muito bem embalado e protegido. O headset tem um isolamento acústico e microfone muito bons, o teclado e mouse respondem super rápido. Recomendo de olhos fechados!</p>
+            <p class="mt-2 text-xs text-gray-400 flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Compra verificada · Gabriel Almeida</p>
+          </div>
+
+          <!-- Avaliação 4 -->
+          <div>
+            <div class="flex items-center justify-between">
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-400"></i>
+              </div>
+              <span class="text-xs text-gray-400">28/08/2026</span>
+            </div>
+            <p class="mt-2 text-sm font-semibold text-gray-800">Montagem limpa e silencioso.</p>
+            <p class="mt-1 text-sm text-gray-600">Gabinete muito silencioso mesmo jogando por horas seguidas. Vendedor respondeu todas as dúvidas rápido antes da compra. Valeu cada centavo investido.</p>
+            <p class="mt-2 text-xs text-gray-400 flex items-center gap-1"><i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Compra verificada · Rafael Santos</p>
+          </div>
+        </div>
       </section>
 
       <!-- Perguntas e Respostas -->
@@ -602,10 +674,10 @@ const html = `<!DOCTYPE html>
         <!-- Summary Box -->
         <div class="rounded-xl bg-gray-50 border border-gray-200 p-3.5 flex items-center justify-between">
           <div class="flex items-center gap-3">
-            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" class="size-12 rounded object-contain bg-white border">
+            <img src="images/product-1.jpg" class="size-12 rounded object-contain bg-white border">
             <div>
               <p class="font-bold text-xs text-gray-900">PC Gamer Completo</p>
-              <p class="text-[11px] text-gray-500">Qtd: <span id="modal-qty">1</span>x · Frete Grátis</p>
+              <p class="text-[11px] text-gray-500">Qtd: 1x · Frete Grátis</p>
             </div>
           </div>
           <div class="text-right">
@@ -640,7 +712,7 @@ const html = `<!DOCTYPE html>
             </div>
           </div>
 
-          <!-- Pagamento -->
+          <!-- Pagamento (Pix / Cartão / Boleto) -->
           <div>
             <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">3. Forma de Pagamento</h4>
             <div class="grid grid-cols-3 gap-2 text-xs">
@@ -670,15 +742,18 @@ const html = `<!DOCTYPE html>
               </div>
             </div>
 
-            <!-- Card Box (Hidden by default) -->
+            <!-- Card Box -->
             <div id="card-container" class="mt-3 hidden rounded-lg border border-blue-200 bg-blue-50/30 p-3 space-y-2 text-xs">
-              <input type="text" placeholder="Número do cartão" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
+              <input type="text" placeholder="Número do cartão (0000 0000 0000 0000)" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
+              <input type="text" placeholder="Nome impresso no cartão" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
               <div class="grid grid-cols-2 gap-2">
                 <input type="text" placeholder="Validade (MM/AA)" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
                 <input type="text" placeholder="CVV" maxlength="4" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
               </div>
               <select class="h-8.5 rounded border border-gray-300 px-2 w-full bg-white text-xs">
                 <option>1x de R$ 1.300,00 sem juros</option>
+                <option>2x de R$ 650,00 sem juros</option>
+                <option>3x de R$ 433,33 sem juros</option>
                 <option>5x de R$ 260,00 sem juros</option>
                 <option selected>10x de R$ 130,00 sem juros</option>
               </select>
@@ -686,7 +761,7 @@ const html = `<!DOCTYPE html>
           </div>
 
           <button type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2">
-            <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido
+            <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido (R$ 1.300,00)
           </button>
 
         </form>
@@ -721,15 +796,12 @@ const html = `<!DOCTYPE html>
     // Initialize Lucide Icons
     lucide.createIcons();
 
-    // State
-    let currentQty = 1;
     let currentImg = 0;
     let cartItems = 0;
-    const unitPrice = 1300.00;
 
     const images = [
-      "https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp",
-      "https://http2.mlstatic.com/D_NQ_NP_2X_928296-MLA110076286300_042026-F.webp"
+      "images/product-1.jpg",
+      "images/product-2.jpg"
     ];
 
     function changeImage(idx) {
@@ -765,19 +837,6 @@ const html = `<!DOCTYPE html>
       mainImg.style.transform = 'scale(1)';
     });
 
-    // Quantity
-    function adjustQty(d) {
-      currentQty = Math.max(1, Math.min(8, currentQty + d));
-      document.getElementById('qty-val').innerText = currentQty;
-      updateModalTotals();
-    }
-
-    function updateModalTotals() {
-      const total = currentQty * unitPrice;
-      document.getElementById('modal-qty').innerText = currentQty;
-      document.getElementById('modal-total-price').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    }
-
     // Toast
     function showToast(msg) {
       const t = document.getElementById('toast');
@@ -788,12 +847,12 @@ const html = `<!DOCTYPE html>
 
     // Add to Cart
     function addToCart() {
-      cartItems += currentQty;
+      cartItems = 1;
       document.getElementById('cart-badge-desktop').innerText = cartItems;
       document.getElementById('cart-badge-desktop').classList.remove('hidden');
       document.getElementById('cart-badge-mobile').innerText = cartItems;
       document.getElementById('cart-badge-mobile').classList.remove('hidden');
-      showToast(\`\${currentQty}x PC Gamer adicionado ao carrinho!\`);
+      showToast("1x PC Gamer adicionado ao carrinho!");
     }
 
     // Share link
@@ -831,7 +890,6 @@ const html = `<!DOCTYPE html>
     // Checkout Modal
     const modal = document.getElementById('checkout-modal');
     function openCheckout() {
-      updateModalTotals();
       document.getElementById('checkout-form').classList.remove('hidden');
       document.getElementById('success-screen').classList.add('hidden');
       modal.classList.remove('hidden');
@@ -882,4 +940,5 @@ const html = `<!DOCTYPE html>
 const target = path.join(__dirname, 'index.html');
 fs.writeFileSync(target, html, 'utf8');
 console.log('Arquivo criado com sucesso:', target);
+
 

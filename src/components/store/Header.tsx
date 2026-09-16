@@ -119,55 +119,16 @@ export function Header({ cartCount = 0 }: { cartCount?: number }) {
             className="flex shrink-0 items-center gap-1.5 transition-opacity hover:opacity-95"
             aria-label="Mercado Livre"
           >
-            <svg
-              className="h-8 w-auto sm:h-9"
-              viewBox="0 0 145 36"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Handshake Badge / Oval Icon */}
-              <g id="ml-logo-symbol">
-                <circle cx="21" cy="18" r="15" fill="#FFE600" />
-                <path
-                  d="M10.8 17.2c.4-.7 1.3-.9 2-.5l3.8 2.2c.3.2.7.2 1 0l3.8-2.2c.7-.4 1.6-.2 2 .5.4.7.2 1.6-.5 2l-3.2 1.9c-.9.5-1.9.5-2.8 0l-3.2-1.9c-.7-.4-.9-1.3-.5-2z"
-                  fill="#2D3277"
-                />
-                <path
-                  d="M8.5 14.5c.6-.4 1.4-.2 1.8.4l3.1 4.5c.3.4.8.6 1.3.6.3 0 .6-.1.9-.3l1.8-1.2c.5-.3 1.1-.3 1.6 0l1.8 1.2c.3.2.6.3.9.3.5 0 1-.2 1.3-.6l3.1-4.5c.4-.6 1.2-.8 1.8-.4.6.4.8 1.2.4 1.8l-3.1 4.5c-.7.9-1.7 1.4-2.8 1.4-.7 0-1.4-.2-2-.6l-1.4-.9c-.2-.1-.5-.1-.7 0l-1.4.9c-.6.4-1.3.6-2 .6-1.1 0-2.1-.5-2.8-1.4l-3.1-4.5c-.4-.6-.2-1.4.4-1.8z"
-                  fill="#2D3277"
-                />
-                <circle cx="21" cy="18" r="16.5" stroke="#2D3277" strokeWidth="1.2" fill="none" />
-              </g>
-
-              {/* Text: mercado livre */}
-              <g id="ml-logo-text" fill="#2D3277">
-                <text
-                  x="42"
-                  y="16"
-                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-                  fontSize="13.5"
-                  fontWeight="600"
-                  letterSpacing="-0.3px"
-                >
-                  mercado
-                </text>
-                <text
-                  x="42"
-                  y="29"
-                  fontFamily="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-                  fontSize="13.5"
-                  fontWeight="600"
-                  letterSpacing="-0.3px"
-                >
-                  livre
-                </text>
-              </g>
-            </svg>
+            <img
+              src="/images/logo.png"
+              alt="Mercado Livre"
+              className="h-8 w-auto sm:h-9 object-contain"
+            />
           </a>
 
           {/* Search Bar */}
           <form
-            className="relative flex flex-1 max-w-[600px] items-center"
+            className="relative flex flex-1 max-w-[650px] items-center"
             onSubmit={(e) => e.preventDefault()}
             role="search"
           >
@@ -191,19 +152,28 @@ export function Header({ cartCount = 0 }: { cartCount?: number }) {
             </div>
           </form>
 
-          {/* Right Banner / Promo Button (Meli+ pill with pink plus circle) */}
-          <div className="hidden lg:flex items-center">
+          {/* User Links on Top Right */}
+          <div className="hidden lg:flex items-center gap-4 text-[13px] text-[#333333]">
+            <a href="#" className="hover:text-black transition-colors">
+              Crie a sua conta
+            </a>
+            <a href="#" className="hover:text-black transition-colors">
+              Entre
+            </a>
+            <a href="#" className="hover:text-black transition-colors">
+              Compras
+            </a>
             <a
               href="#"
-              className="flex h-10 items-center justify-between gap-3 rounded-full bg-white px-3 py-1.5 shadow-[0_1px_2px_0_rgba(0,0,0,0.12)] transition-shadow hover:shadow-[0_2px_5px_0_rgba(0,0,0,0.2)]"
-              title="Assine o Meli+"
+              className="relative p-1 text-[#333333] hover:text-black transition-colors"
+              aria-label="Carrinho de compras"
             >
-              <div className="flex items-center gap-1.5 pl-1 text-[13px] font-semibold text-[#2D3277]">
-                <span className="w-16"></span>
-              </div>
-              <div className="flex size-7 items-center justify-center rounded-full bg-[#E6007E] text-white shadow-xs">
-                <Plus className="size-4.5 stroke-[3]" />
-              </div>
+              <ShoppingCart className="size-5 stroke-[1.8]" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 grid size-4 min-w-4 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
             </a>
           </div>
 
