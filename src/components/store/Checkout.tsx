@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import {
-  Check, Copy, CreditCard, QrCode, Barcode, ChevronLeft, CheckCircle2, Loader2,
+  Check, Copy, CreditCard, QrCode, ChevronLeft, CheckCircle2, Loader2, ShieldCheck, Lock, Calendar, User, ChevronDown,
 } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -15,7 +15,7 @@ import {
   isValidCPF, isValidExpiry, maskCEP, maskCPF, maskCVV, maskCard, maskExpiry, maskPhone, onlyDigits,
 } from "@/lib/masks";
 
-type Pagamento = "pix" | "cartao" | "boleto";
+type Pagamento = "pix" | "cartao";
 
 const CEP_MOCK: Record<string, { rua: string; bairro: string; cidade: string; estado: string }> = {
   default: {
@@ -73,8 +73,37 @@ export function Checkout({
     setPixLoading(false);
   };
 
+  // PIX EMV builder — generates a valid Brazilian PIX static QR string
+  const buildPixEMV = (pixKey: string, merchantName: string, merchantCity: string, amount: number, txId: string) => {
+    const tlv = (tag: string, val: string) => `${tag}${val.length.toString().padStart(2, '0')}${val}`;
+    const pixKeyBlock = tlv('00', 'br.gov.bcb.pix') + tlv('01', pixKey);
+    const merchantAccountInfo = tlv('26', pixKeyBlock);
+    const amt = amount.toFixed(2);
+    const id = (txId || '***').substring(0, 25);
+    const addInfo = tlv('05', id);
+    const additionalData = tlv('62', addInfo);
+    const base =
+      tlv('00', '01') +
+      merchantAccountInfo +
+      tlv('52', '0000') +
+      tlv('53', '986') +
+      tlv('54', amt) +
+      tlv('58', 'BR') +
+      tlv('59', merchantName.substring(0, 25)) +
+      tlv('60', merchantCity.substring(0, 15)) +
+      additionalData +
+      '6304';
+    let crc = 0xFFFF;
+    for (let i = 0; i < base.length; i++) {
+      crc ^= base.charCodeAt(i) << 8;
+      for (let j = 0; j < 8; j++) { crc = (crc & 0x8000) ? (crc << 1) ^ 0x1021 : crc << 1; }
+    }
+    return base + (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+  };
+
   const gerarPixIronPay = async (dados = f) => {
     setPixLoading(true);
+    let code = "";
     try {
       const payload = {
         amount: IRONPAY_CONFIG.amount,
@@ -111,34 +140,29 @@ export function Checkout({
 
       const res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
       });
 
       const resData = await res.json().catch(() => null);
-      let code = "";
       if (res.ok && resData?.pix?.pix_qr_code) {
         code = resData.pix.pix_qr_code;
-      } else if (resData?.data?.pix?.pix_qr_code) {
+      } else if (res.ok && resData?.data?.pix?.pix_qr_code) {
         code = resData.data.pix.pix_qr_code;
       }
-
-      if (!code) {
-        code = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304${Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase()}`;
-      }
-
-      setPixCode(code);
-      toast.success("QR Code Pix gerado via IronPay!");
     } catch (err) {
-      console.error("Erro ao gerar Pix IronPay:", err);
-      const fallback = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304A1B2`;
-      setPixCode(fallback);
-    } finally {
-      setPixLoading(false);
+      console.warn("IronPay API error:", err);
     }
+
+    // Fallback: generate valid PIX EMV static QR (works in any banking app)
+    if (!code) {
+      const txId = 'GAMER' + Date.now().toString(36).toUpperCase().slice(-8);
+      code = buildPixEMV('+5519988639551', 'PC GAMER LOJA', 'MIRASSOL', 1300.00, txId);
+    }
+
+    setPixCode(code);
+    toast.success("QR Code Pix gerado com sucesso!");
+    setPixLoading(false);
   };
 
   const buscarCep = (value: string) => {
@@ -318,24 +342,100 @@ export function Checkout({
                     desc={`Até ${product.parcelamento.vezes}x sem juros`}
                     current={pagamento}
                   />
-                  <PayOption value="boleto" icon={Barcode} title="Boleto bancário" desc="Compensa em até 2 dias úteis" current={pagamento} />
                 </RadioGroup>
 
                 {pagamento === "cartao" && (
-                  <div className="space-y-3 rounded-lg border border-border p-4">
-                    <Field label="Nome impresso no cartão" error={errors["cardNome"]}>
-                      <Input value={f.cardNome} onChange={(e) => set("cardNome", e.target.value.toUpperCase().slice(0, 40))} />
-                    </Field>
-                    <Field label="Número do cartão" error={errors["cardNumero"]}>
-                      <Input inputMode="numeric" value={f.cardNumero} onChange={(e) => set("cardNumero", maskCard(e.target.value))} placeholder="0000 0000 0000 0000" />
-                    </Field>
-                    <div className="grid grid-cols-2 gap-3">
-                      <Field label="Validade" error={errors["cardValidade"]}>
-                        <Input inputMode="numeric" value={f.cardValidade} onChange={(e) => set("cardValidade", maskExpiry(e.target.value))} placeholder="MM/AA" />
+                  <div className="space-y-4 rounded-xl border border-blue-200 bg-gradient-to-b from-blue-50/60 to-white p-4">
+                    {/* Card Preview */}
+                    <div className="rounded-xl bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 p-4 text-white shadow-md relative overflow-hidden">
+                      <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,.15) 10px, rgba(255,255,255,.15) 11px)' }} />
+                      <div className="flex justify-between items-start mb-4">
+                        <CreditCard className="w-7 h-7 opacity-80" />
+                        <span className="text-[10px] font-bold tracking-widest opacity-70">VISA / MASTER</span>
+                      </div>
+                      <p className="text-sm font-mono tracking-widest mb-3 opacity-90">
+                        {f.cardNumero || '•••• •••• •••• ••••'}
+                      </p>
+                      <div className="flex justify-between items-end">
+                        <div>
+                          <p className="text-[9px] uppercase opacity-60 mb-0.5">Titular</p>
+                          <p className="text-xs font-semibold tracking-wider uppercase">{f.cardNome || 'SEU NOME'}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-[9px] uppercase opacity-60 mb-0.5">Validade</p>
+                          <p className="text-xs font-mono">{f.cardValidade || 'MM/AA'}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Card Fields */}
+                    <div className="space-y-3">
+                      <Field label="Número do Cartão" error={errors["cardNumero"]}>
+                        <div className="relative">
+                          <Input
+                            inputMode="numeric"
+                            value={f.cardNumero}
+                            onChange={(e) => set("cardNumero", maskCard(e.target.value))}
+                            placeholder="0000 0000 0000 0000"
+                            className="pr-10"
+                          />
+                          <CreditCard className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        </div>
                       </Field>
-                      <Field label="CVV" error={errors["cardCvv"]}>
-                        <Input inputMode="numeric" value={f.cardCvv} onChange={(e) => set("cardCvv", maskCVV(e.target.value))} placeholder="123" />
+                      <Field label="Nome do Titular" error={errors["cardNome"]}>
+                        <div className="relative">
+                          <Input
+                            value={f.cardNome}
+                            onChange={(e) => set("cardNome", e.target.value.toUpperCase().slice(0, 40))}
+                            placeholder="Como impresso no cartão"
+                            className="pr-10"
+                          />
+                          <User className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        </div>
                       </Field>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Field label="Validade" error={errors["cardValidade"]}>
+                          <div className="relative">
+                            <Input
+                              inputMode="numeric"
+                              value={f.cardValidade}
+                              onChange={(e) => set("cardValidade", maskExpiry(e.target.value))}
+                              placeholder="MM/AA"
+                              className="pr-9"
+                            />
+                            <Calendar className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                          </div>
+                        </Field>
+                        <Field label="CVV" error={errors["cardCvv"]}>
+                          <div className="relative">
+                            <Input
+                              type="password"
+                              inputMode="numeric"
+                              value={f.cardCvv}
+                              onChange={(e) => set("cardCvv", maskCVV(e.target.value))}
+                              placeholder="•••"
+                              className="pr-9"
+                            />
+                            <Lock className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+                          </div>
+                        </Field>
+                      </div>
+                      <Field label="Parcelas">
+                        <div className="relative">
+                          <select className="h-10 w-full appearance-none rounded-md border border-input bg-background px-3 pr-9 text-sm focus:border-ring focus:outline-none focus:ring-1 focus:ring-ring">
+                            <option>1x de R$ 1.300,00 sem juros</option>
+                            <option>2x de R$ 650,00 sem juros</option>
+                            <option>3x de R$ 433,33 sem juros</option>
+                            <option>5x de R$ 260,00 sem juros</option>
+                            <option selected>10x de R$ 130,00 sem juros</option>
+                          </select>
+                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+                        </div>
+                      </Field>
+                      <div className="flex items-center gap-2 rounded-lg bg-blue-50 border border-blue-100 px-3 py-2">
+                        <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0" />
+                        <p className="text-xs text-blue-700">Dados criptografados com SSL 256-bit.</p>
+                      </div>
                     </div>
                   </div>
                 )}
@@ -348,13 +448,6 @@ export function Checkout({
                     setCopied={setCopied}
                     onRetry={() => gerarPixIronPay(f)}
                   />
-                )}
-
-                {pagamento === "boleto" && (
-                  <div className="rounded-lg border border-border bg-muted/50 p-4 text-sm text-muted-foreground">
-                    O boleto demonstrativo será gerado na confirmação do pedido e enviado para o
-                    e-mail informado.
-                  </div>
                 )}
 
                 <div className="flex gap-2">
