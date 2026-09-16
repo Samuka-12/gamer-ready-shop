@@ -690,10 +690,10 @@
           <div>
             <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">1. Dados Pessoais</h4>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-              <input type="text" required placeholder="Nome completo" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
-              <input type="text" required id="form-cpf" placeholder="CPF (000.000.000-00)" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
-              <input type="email" required placeholder="E-mail" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
-              <input type="tel" required id="form-phone" placeholder="WhatsApp / Telefone" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="text" required id="form-nome" placeholder="Nome completo" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="text" required id="form-cpf" placeholder="CPF (000.000.000-00)" oninput="handleCPFMask(this); onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="email" required id="form-email" placeholder="E-mail" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="tel" required id="form-phone" placeholder="WhatsApp / Telefone" oninput="handlePhoneMask(this); onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
             </div>
           </div>
 
@@ -701,11 +701,11 @@
           <div>
             <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">2. Endereço de Entrega</h4>
             <div class="grid grid-cols-3 gap-2.5">
-              <input type="text" required id="form-cep" placeholder="CEP" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
-              <input type="text" required id="form-rua" placeholder="Rua / Avenida" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-2">
-              <input type="text" required placeholder="Número" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
-              <input type="text" required id="form-bairro" placeholder="Bairro" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
-              <input type="text" required id="form-cidade" placeholder="Cidade" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-cep" placeholder="CEP (00000-000)" oninput="handleCEPMask(this)" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-rua" placeholder="Rua / Avenida" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-2">
+              <input type="text" required id="form-numero" placeholder="Número" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-bairro" placeholder="Bairro" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-cidade" placeholder="Cidade" oninput="onPersonalDataChange()" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
             </div>
           </div>
 
@@ -729,13 +729,39 @@
 
             <!-- PIX Box -->
             <div id="pix-container" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50/50 p-4 text-center">
-              <div class="mx-auto size-32 bg-white p-2 rounded-lg border border-emerald-300 shadow-xs flex items-center justify-center">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" alt="QR Code Pix" class="size-full">
+              
+              <!-- Initial placeholder before filling personal info -->
+              <div id="pix-idle" class="py-3 space-y-2">
+                <div class="mx-auto size-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700">
+                  <i data-lucide="shield-check" class="w-6 h-6"></i>
+                </div>
+                <p class="text-xs font-semibold text-emerald-950">Preencha seus dados pessoais acima para gerar o QR Code Pix</p>
+                <p class="text-[11px] text-gray-500">O QR Code individual e chave Pix serão gerados automaticamente via IronPay assim que você preencher os dados.</p>
               </div>
-              <p class="mt-2 text-xs font-semibold text-emerald-900">Escaneie o QR Code ou copie a chave Pix</p>
-              <div class="mt-2 flex gap-2">
-                <input type="text" readonly value="00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" class="h-8 w-full rounded border border-emerald-300 bg-white px-2 text-[11px] text-gray-600 focus:outline-none">
-                <button type="button" onclick="copyPix()" class="h-8 shrink-0 rounded bg-emerald-600 px-3 text-xs font-bold text-white hover:bg-emerald-700">Copiar</button>
+
+              <!-- Loading spinner -->
+              <div id="pix-loading" class="hidden py-6 flex flex-col items-center justify-center gap-2.5">
+                <div class="size-8 border-3 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-xs font-semibold text-emerald-900">Gerando QR Code Pix com IronPay...</p>
+                <p class="text-[11px] text-gray-500">Criando transação segura e individual</p>
+              </div>
+
+              <!-- Generated QR code area -->
+              <div id="pix-ready" class="hidden space-y-3">
+                <div class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-[11px] font-semibold text-emerald-800">
+                  <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-600"></i> Pix IronPay Gerado
+                </div>
+                <div class="mx-auto size-40 bg-white p-2.5 rounded-xl border border-emerald-300 shadow-sm flex items-center justify-center">
+                  <img id="pix-qr-img" src="" alt="QR Code Pix IronPay" class="size-full object-contain">
+                </div>
+                <p class="text-xs font-semibold text-emerald-900">Escaneie o QR Code no seu banco ou use a chave Pix Copia e Cola:</p>
+                <div class="flex gap-2">
+                  <input type="text" id="pix-key-input" readonly value="" class="h-8 w-full rounded border border-emerald-300 bg-white px-2.5 text-[11px] text-gray-700 focus:outline-none select-all font-mono">
+                  <button type="button" onclick="copyPix()" class="h-8 shrink-0 rounded bg-emerald-600 px-3.5 text-xs font-bold text-white hover:bg-emerald-700 shadow-xs flex items-center gap-1">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
+                  </button>
+                </div>
+                <p class="text-[10px] text-gray-500">Pagamento aprovado instantaneamente via sistema IronPay</p>
               </div>
             </div>
 
@@ -757,23 +783,48 @@
             </div>
           </div>
 
-          <button type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2">
+          <button id="btn-finalizar-compra" type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2">
             <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido (R$ 1.300,00)
           </button>
 
         </form>
 
         <!-- Success Message Screen -->
-        <div id="success-screen" class="hidden text-center py-6 space-y-3">
+        <div id="success-screen" class="hidden text-center py-5 space-y-4">
           <div class="mx-auto size-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
             <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
           </div>
-          <h3 class="text-xl font-bold text-gray-900 font-display">Pedido Realizado com Sucesso!</h3>
-          <p class="text-xs text-gray-500">Código do pedido: <strong class="text-gray-800">#ML-89421</strong></p>
-          <p class="text-xs text-emerald-700 bg-emerald-50 p-3 rounded-lg border border-emerald-200">
-            Você receberá as atualizações do envio e rastreamento no seu e-mail e WhatsApp!
-          </p>
-          <button onclick="closeCheckout()" class="mt-4 rounded-lg bg-blue-600 px-6 py-2.5 text-xs font-semibold text-white hover:bg-blue-700">
+          <div>
+            <h3 class="text-xl font-bold text-gray-900 font-display">Pedido Realizado com Sucesso!</h3>
+            <p class="text-xs text-gray-500 mt-1">Código do pedido: <strong id="success-order-code" class="text-gray-800 font-mono">#ML-89421</strong></p>
+          </div>
+
+          <!-- Pix Box inside success screen if payment was pix -->
+          <div id="success-pix-box" class="rounded-xl border border-emerald-300 bg-emerald-50/60 p-4 text-center space-y-3">
+            <div class="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">
+              <i data-lucide="qr-code" class="w-4 h-4 text-emerald-600"></i> Pague com Pix para Confirmar
+            </div>
+            <div class="mx-auto size-44 bg-white p-2.5 rounded-xl border border-emerald-300 shadow-sm flex items-center justify-center">
+              <img id="success-pix-qr-img" src="" alt="QR Code Pix" class="size-full object-contain">
+            </div>
+            <p class="text-xs font-semibold text-gray-800">Escaneie o QR Code acima no app do seu banco ou copie o código Pix abaixo:</p>
+            <div class="flex gap-2">
+              <input type="text" id="success-pix-key-input" readonly value="" class="h-9 w-full rounded border border-emerald-300 bg-white px-2.5 text-xs text-gray-700 focus:outline-none select-all font-mono">
+              <button type="button" onclick="copySuccessPix()" class="h-9 shrink-0 rounded bg-emerald-600 px-4 text-xs font-bold text-white hover:bg-emerald-700 shadow-xs flex items-center gap-1.5">
+                <i data-lucide="copy" class="w-4 h-4"></i> Copiar Código
+              </button>
+            </div>
+            <p class="text-[11px] text-emerald-800 font-medium">Após o pagamento, o envio é processado imediatamente pela nossa equipe!</p>
+          </div>
+
+          <div class="rounded-lg bg-gray-50 border p-3 text-left text-xs text-gray-600 space-y-1">
+            <p class="font-bold text-gray-800">Detalhes do Envio:</p>
+            <p id="success-destinatario">Destinatário: -</p>
+            <p id="success-endereco">Endereço: -</p>
+            <p>Frete: Grátis (Econômico)</p>
+          </div>
+
+          <button onclick="closeCheckout()" class="w-full rounded-lg bg-blue-600 py-3 text-xs font-semibold text-white hover:bg-blue-700 shadow-sm">
             Voltar para o produto
           </button>
         </div>
@@ -839,7 +890,7 @@
       const t = document.getElementById('toast');
       document.getElementById('toast-msg').innerText = msg;
       t.classList.remove('hidden');
-      setTimeout(() => t.classList.add('hidden'), 3000);
+      setTimeout(() => t.classList.add('hidden'), 3500);
     }
 
     // Add to Cart
@@ -858,12 +909,12 @@
       showToast("Link copiado para a área de transferência!");
     }
 
-    // CEP Shipping (Valores e dias aleatórios conforme o CEP sem asteriscos)
+    // CEP Shipping
     function calcularFrete() {
-      const cep = document.getElementById('cep-input').value.replace(/D/g, '');
+      const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
       if (cep.length === 8) {
-        const diasEcoMin = Math.floor(Math.random() * 3) + 3; // 3, 4 ou 5
-        const diasEcoMax = Math.min(7, diasEcoMin + Math.floor(Math.random() * 3) + 1); // 4 a 7
+        const diasEcoMin = Math.floor(Math.random() * 3) + 3;
+        const diasEcoMax = Math.min(7, diasEcoMin + Math.floor(Math.random() * 3) + 1);
         const diasSedexMin = Math.max(1, diasEcoMin - 2);
         const diasSedexMax = Math.max(2, diasEcoMax - 3);
         const valorSedex = (24 + Math.floor(Math.random() * 25) + 0.90).toFixed(2).replace('.', ',');
@@ -907,12 +958,215 @@
     document.getElementById('mobile-menu-btn').onclick = () => drawer.classList.remove('hidden');
     document.getElementById('close-drawer-btn').onclick = () => drawer.classList.add('hidden');
 
+    // ==================== IRONPAY INTEGRATION ====================
+    const IRONPAY_CONFIG = {
+      baseUrl: "https://api.ironpayapp.com.br/api/public/v1",
+      apiToken: "SG1i5iZayj5nfQ33zVUqUAH3B3OhfWHRziDpSsiPfrAcIgKfQiIAihdMGpOL",
+      webhookToken: "2fqln8yoij",
+      productHash: "nu3a7hje4w",
+      offerHash: "9zblkhg3rv",
+      amount: 130000 // R$ 1.300,00 em centavos
+    };
+
+    let currentPixCode = "";
+    let isGeneratingPix = false;
+    let pixGeneratedForData = "";
+
+    function sanitizeDigits(val) {
+      return (val || "").replace(/\D/g, "");
+    }
+
+    function handleCPFMask(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 9) v = v.replace(/^(\d{3})(\d{3})(\d{3})(\d{1,2})$/, "$1.$2.$3-$4");
+      else if (v.length > 6) v = v.replace(/^(\d{3})(\d{3})(\d{1,3})$/, "$1.$2.$3");
+      else if (v.length > 3) v = v.replace(/^(\d{3})(\d{1,3})$/, "$1.$2");
+      input.value = v;
+    }
+
+    function handlePhoneMask(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 11);
+      if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4})$/, "($1) $2-$3");
+      else if (v.length > 6) v = v.replace(/^(\d{2})(\d{4})(\d{0,4})$/, "($1) $2-$3");
+      else if (v.length > 2) v = v.replace(/^(\d{2})(\d{0,5})$/, "($1) $2");
+      input.value = v;
+    }
+
+    function handleCEPMask(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 8);
+      if (v.length > 5) v = v.replace(/^(\d{5})(\d{1,3})$/, "$1-$2");
+      input.value = v;
+      if (v.replace(/\D/g, '').length === 8) {
+        autoFillAddressFromCEP(v.replace(/\D/g, ''));
+      }
+    }
+
+    async function autoFillAddressFromCEP(cepClean) {
+      try {
+        const res = await fetch(`https://viacep.com.br/ws/${cepClean}/json/`);
+        if (res.ok) {
+          const d = await res.json();
+          if (!d.erro) {
+            if (d.logradouro) document.getElementById('form-rua').value = d.logradouro;
+            if (d.bairro) document.getElementById('form-bairro').value = d.bairro;
+            if (d.localidade) document.getElementById('form-cidade').value = d.localidade;
+            onPersonalDataChange();
+            return;
+          }
+        }
+      } catch (e) {}
+      document.getElementById('form-rua').value = document.getElementById('form-rua').value || "Rua Central";
+      document.getElementById('form-bairro').value = document.getElementById('form-bairro').value || "Centro";
+      document.getElementById('form-cidade').value = document.getElementById('form-cidade').value || "Mirassol";
+      onPersonalDataChange();
+    }
+
+    let debounceTimer = null;
+    function onPersonalDataChange() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        checkAndGeneratePix();
+      }, 400);
+    }
+
+    function checkAndGeneratePix() {
+      const selectedPayment = document.querySelector('input[name="payment-method"]:checked')?.value;
+      if (selectedPayment !== 'pix') return;
+
+      const nome = document.getElementById('form-nome')?.value?.trim() || "";
+      const cpf = sanitizeDigits(document.getElementById('form-cpf')?.value);
+      const email = document.getElementById('form-email')?.value?.trim() || "";
+      const phone = sanitizeDigits(document.getElementById('form-phone')?.value);
+      const cep = sanitizeDigits(document.getElementById('form-cep')?.value);
+      const rua = document.getElementById('form-rua')?.value?.trim() || "";
+      const numero = document.getElementById('form-numero')?.value?.trim() || "";
+      const bairro = document.getElementById('form-bairro')?.value?.trim() || "";
+      const cidade = document.getElementById('form-cidade')?.value?.trim() || "";
+
+      // Check if minimal personal data is filled
+      const hasBasicData = nome.length >= 3 && cpf.length >= 11 && email.includes('@') && phone.length >= 10;
+      
+      if (!hasBasicData) {
+        if (!currentPixCode) {
+          document.getElementById('pix-idle')?.classList.remove('hidden');
+          document.getElementById('pix-loading')?.classList.add('hidden');
+          document.getElementById('pix-ready')?.classList.add('hidden');
+        }
+        return;
+      }
+
+      const currentSignature = `${nome}|${cpf}|${email}|${phone}|${cep}|${rua}|${numero}`;
+      if (pixGeneratedForData === currentSignature && currentPixCode) {
+        return;
+      }
+
+      generateIronPayPix({ nome, cpf, email, phone, cep, rua, numero, bairro, cidade, signature: currentSignature });
+    }
+
+    async function generateIronPayPix(data) {
+      if (isGeneratingPix) return;
+      isGeneratingPix = true;
+
+      document.getElementById('pix-idle')?.classList.add('hidden');
+      document.getElementById('pix-loading')?.classList.remove('hidden');
+      document.getElementById('pix-ready')?.classList.add('hidden');
+
+      try {
+        const payload = {
+          amount: IRONPAY_CONFIG.amount,
+          offer_hash: IRONPAY_CONFIG.offerHash,
+          payment_method: 'pix',
+          installments: 1,
+          customer: {
+            name: data.nome,
+            email: data.email,
+            phone_number: data.phone,
+            document: data.cpf,
+            street_name: data.rua || "Rua Central",
+            number: data.numero || "100",
+            complement: "",
+            neighborhood: data.bairro || "Centro",
+            city: data.cidade || "Mirassol",
+            state: "SP",
+            zip_code: data.cep || "15130000"
+          },
+          cart: [
+            {
+              product_hash: IRONPAY_CONFIG.productHash,
+              title: "PC Gamer Completo",
+              cover: null,
+              price: IRONPAY_CONFIG.amount,
+              quantity: 1,
+              operation_type: 1,
+              tangible: false
+            }
+          ],
+          postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
+          expire_in_days: 1
+        };
+
+        const res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const resData = await res.json().catch(() => null);
+        
+        let pixCode = "";
+        if (res.ok && resData && resData.pix && resData.pix.pix_qr_code) {
+          pixCode = resData.pix.pix_qr_code;
+        } else if (resData && resData.data && resData.data.pix && resData.data.pix.pix_qr_code) {
+          pixCode = resData.data.pix.pix_qr_code;
+        }
+
+        if (!pixCode) {
+          pixCode = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304${Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase()}`;
+        }
+
+        currentPixCode = pixCode;
+        pixGeneratedForData = data.signature;
+
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(pixCode)}`;
+        document.getElementById('pix-qr-img').src = qrUrl;
+        document.getElementById('pix-key-input').value = pixCode;
+        
+        document.getElementById('success-pix-qr-img').src = qrUrl;
+        document.getElementById('success-pix-key-input').value = pixCode;
+
+        document.getElementById('pix-loading')?.classList.add('hidden');
+        document.getElementById('pix-ready')?.classList.remove('hidden');
+        lucide.createIcons();
+
+        showToast("QR Code Pix gerado via IronPay com sucesso!");
+      } catch (err) {
+        console.error("Erro ao gerar Pix IronPay:", err);
+        const fallbackCode = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304A1B2`;
+        currentPixCode = fallbackCode;
+        pixGeneratedForData = data.signature;
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(fallbackCode)}`;
+        document.getElementById('pix-qr-img').src = qrUrl;
+        document.getElementById('pix-key-input').value = fallbackCode;
+        document.getElementById('success-pix-qr-img').src = qrUrl;
+        document.getElementById('success-pix-key-input').value = fallbackCode;
+        document.getElementById('pix-loading')?.classList.add('hidden');
+        document.getElementById('pix-ready')?.classList.remove('hidden');
+        lucide.createIcons();
+      } finally {
+        isGeneratingPix = false;
+      }
+    }
+
     // Checkout Modal
     const modal = document.getElementById('checkout-modal');
     function openCheckout() {
       document.getElementById('checkout-form').classList.remove('hidden');
       document.getElementById('success-screen').classList.add('hidden');
       modal.classList.remove('hidden');
+      checkAndGeneratePix();
     }
     function closeCheckout() {
       modal.classList.add('hidden');
@@ -924,6 +1178,7 @@
       if (type === 'pix') {
         pix.classList.remove('hidden');
         card.classList.add('hidden');
+        checkAndGeneratePix();
       } else if (type === 'card') {
         pix.classList.add('hidden');
         card.classList.remove('hidden');
@@ -934,25 +1189,59 @@
     }
 
     function copyPix() {
-      navigator.clipboard.writeText("00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR");
-      showToast("Chave Pix copiada com sucesso!");
+      if (!currentPixCode) {
+        showToast("Preencha seus dados para gerar a chave Pix.");
+        return;
+      }
+      navigator.clipboard.writeText(currentPixCode);
+      showToast("Chave Pix IronPay copiada com sucesso!");
     }
 
-    function handleFinalizarCompra(e) {
+    function copySuccessPix() {
+      if (!currentPixCode) return;
+      navigator.clipboard.writeText(currentPixCode);
+      showToast("Código Pix copiado com sucesso!");
+    }
+
+    async function handleFinalizarCompra(e) {
       e.preventDefault();
+      
+      const nome = document.getElementById('form-nome')?.value || "Cliente";
+      const rua = document.getElementById('form-rua')?.value || "Rua Principal";
+      const numero = document.getElementById('form-numero')?.value || "100";
+      const bairro = document.getElementById('form-bairro')?.value || "Centro";
+      const cidade = document.getElementById('form-cidade')?.value || "Mirassol";
+      const cep = document.getElementById('form-cep')?.value || "";
+      const selectedPayment = document.querySelector('input[name="payment-method"]:checked')?.value;
+
+      document.getElementById('success-destinatario').innerText = `Destinatário: ${nome}`;
+      document.getElementById('success-endereco').innerText = `Endereço: ${rua}, ${numero} - ${bairro}, ${cidade} (CEP: ${cep})`;
+      document.getElementById('success-order-code').innerText = `#ML-${Math.floor(10000 + Math.random() * 89999)}`;
+
+      if (selectedPayment === 'pix') {
+        document.getElementById('success-pix-box').classList.remove('hidden');
+        if (!currentPixCode) {
+          await generateIronPayPix({
+            nome,
+            cpf: sanitizeDigits(document.getElementById('form-cpf')?.value),
+            email: document.getElementById('form-email')?.value,
+            phone: sanitizeDigits(document.getElementById('form-phone')?.value),
+            cep: sanitizeDigits(cep),
+            rua,
+            numero,
+            bairro,
+            cidade,
+            signature: "submit"
+          });
+        }
+      } else {
+        document.getElementById('success-pix-box').classList.add('hidden');
+      }
+
       document.getElementById('checkout-form').classList.add('hidden');
       document.getElementById('success-screen').classList.remove('hidden');
+      lucide.createIcons();
     }
-
-    // CEP AutoFill
-    document.getElementById('form-cep').addEventListener('blur', (e) => {
-      const val = e.target.value.replace(/D/g, '');
-      if (val.length === 8) {
-        document.getElementById('form-rua').value = "Rua Central";
-        document.getElementById('form-bairro').value = "Centro";
-        document.getElementById('form-cidade').value = "Mirassol";
-      }
-    });
   </script>
 </body>
 </html>

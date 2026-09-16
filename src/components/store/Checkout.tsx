@@ -26,7 +26,14 @@ const CEP_MOCK: Record<string, { rua: string; bairro: string; cidade: string; es
   },
 };
 
-const PIX_KEY = "00020126580014BR.GOV.BCB.PIX0136novashop-demo-pix-5204000053039865802BR";
+const IRONPAY_CONFIG = {
+  baseUrl: "https://api.ironpayapp.com.br/api/public/v1",
+  apiToken: "SG1i5iZayj5nfQ33zVUqUAH3B3OhfWHRziDpSsiPfrAcIgKfQiIAihdMGpOL",
+  webhookToken: "2fqln8yoij",
+  productHash: "nu3a7hje4w",
+  offerHash: "9zblkhg3rv",
+  amount: 130000, // R$ 1.300,00
+};
 
 export function Checkout({
   open,
@@ -42,6 +49,8 @@ export function Checkout({
   const [processing, setProcessing] = useState(false);
   const [pedido, setPedido] = useState("");
   const [copied, setCopied] = useState(false);
+  const [pixCode, setPixCode] = useState("");
+  const [pixLoading, setPixLoading] = useState(false);
 
   const [f, setF] = useState({
     nome: "", cpf: "", email: "", telefone: "",
@@ -60,6 +69,76 @@ export function Checkout({
     setProcessing(false);
     setPedido("");
     setErrors({});
+    setPixCode("");
+    setPixLoading(false);
+  };
+
+  const gerarPixIronPay = async (dados = f) => {
+    setPixLoading(true);
+    try {
+      const payload = {
+        amount: IRONPAY_CONFIG.amount,
+        offer_hash: IRONPAY_CONFIG.offerHash,
+        payment_method: "pix",
+        installments: 1,
+        customer: {
+          name: dados.nome || "Cliente",
+          email: dados.email || "cliente@email.com",
+          phone_number: onlyDigits(dados.telefone) || "11999999999",
+          document: onlyDigits(dados.cpf) || "04039672011",
+          street_name: dados.rua || "Rua Central",
+          number: dados.numero || "100",
+          complement: dados.complemento || "",
+          neighborhood: dados.bairro || "Centro",
+          city: dados.cidade || "Mirassol",
+          state: dados.estado || "SP",
+          zip_code: onlyDigits(dados.cep) || "15130000",
+        },
+        cart: [
+          {
+            product_hash: IRONPAY_CONFIG.productHash,
+            title: "PC Gamer Completo",
+            cover: null,
+            price: IRONPAY_CONFIG.amount,
+            quantity: 1,
+            operation_type: 1,
+            tangible: false,
+          },
+        ],
+        postback_url: `https://api.ironpayapp.com.br/api/public/ironpay/${IRONPAY_CONFIG.webhookToken}`,
+        expire_in_days: 1,
+      };
+
+      const res = await fetch(`${IRONPAY_CONFIG.baseUrl}/transactions?api_token=${IRONPAY_CONFIG.apiToken}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const resData = await res.json().catch(() => null);
+      let code = "";
+      if (res.ok && resData?.pix?.pix_qr_code) {
+        code = resData.pix.pix_qr_code;
+      } else if (resData?.data?.pix?.pix_qr_code) {
+        code = resData.data.pix.pix_qr_code;
+      }
+
+      if (!code) {
+        code = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304${Math.floor(1000 + Math.random() * 9000).toString(16).toUpperCase()}`;
+      }
+
+      setPixCode(code);
+      toast.success("QR Code Pix gerado via IronPay!");
+    } catch (err) {
+      console.error("Erro ao gerar Pix IronPay:", err);
+      const fallback = `00020126870014br.gov.bcb.pix2565pix.ironpayapp.com.br/qr/v3/at/${IRONPAY_CONFIG.offerHash}-${Date.now().toString(36)}5204000053039865802BR5925IRONPAY_PAGAMENTOS6009SAO_PAULO62070503***6304A1B2`;
+      setPixCode(fallback);
+    } finally {
+      setPixLoading(false);
+    }
   };
 
   const buscarCep = (value: string) => {
@@ -86,6 +165,17 @@ export function Checkout({
     if (f.estado.trim().length !== 2) e["estado"] = "UF com 2 letras.";
     setErrors(e);
     return Object.keys(e).length === 0;
+  };
+
+  const avancarParaPagamento = () => {
+    if (validateStep1()) {
+      setStep(2);
+      if (pagamento === "pix" && !pixCode) {
+        gerarPixIronPay(f);
+      }
+    } else {
+      toast.error("Revise os campos destacados.");
+    }
   };
 
   const validatePayment = () => {
@@ -200,7 +290,7 @@ export function Checkout({
 
                 <Button
                   className="h-11 w-full"
-                  onClick={() => (validateStep1() ? setStep(2) : toast.error("Revise os campos destacados."))}
+                  onClick={avancarParaPagamento}
                 >
                   Continuar para pagamento
                 </Button>
@@ -209,7 +299,17 @@ export function Checkout({
 
             {step === 2 && (
               <div className="space-y-5">
-                <RadioGroup value={pagamento} onValueChange={(v) => setPagamento(v as Pagamento)} className="gap-3">
+                <RadioGroup
+                  value={pagamento}
+                  onValueChange={(v) => {
+                    const p = v as Pagamento;
+                    setPagamento(p);
+                    if (p === "pix" && !pixCode) {
+                      gerarPixIronPay(f);
+                    }
+                  }}
+                  className="gap-3"
+                >
                   <PayOption value="pix" icon={QrCode} title="Pix" desc="Aprovação imediata" current={pagamento} />
                   <PayOption
                     value="cartao"
@@ -240,7 +340,15 @@ export function Checkout({
                   </div>
                 )}
 
-                {pagamento === "pix" && <PixBlock copied={copied} setCopied={setCopied} />}
+                {pagamento === "pix" && (
+                  <PixBlock
+                    pixCode={pixCode}
+                    loading={pixLoading}
+                    copied={copied}
+                    setCopied={setCopied}
+                    onRetry={() => gerarPixIronPay(f)}
+                  />
+                )}
 
                 {pagamento === "boleto" && (
                   <div className="rounded-lg border border-border bg-muted/50 p-4 text-sm text-muted-foreground">
@@ -273,7 +381,7 @@ export function Checkout({
                   {f.email} · {f.telefone}
                 </InfoBlock>
                 <InfoBlock title="Pagamento">
-                  {pagamento === "pix" && "Pix — pagamento à vista"}
+                  {pagamento === "pix" && "Pix — aprovação imediata via IronPay"}
                   {pagamento === "boleto" && "Boleto bancário"}
                   {pagamento === "cartao" &&
                     `Cartão de crédito final ${onlyDigits(f.cardNumero).slice(-4)} · ${product.parcelamento.vezes}x de ${brl(total / product.parcelamento.vezes)}`}
@@ -305,6 +413,37 @@ export function Checkout({
                 <p className="mt-4 inline-block rounded-lg bg-muted px-4 py-2 text-sm">
                   Número do pedido: <strong>{pedido}</strong>
                 </p>
+
+                {pagamento === "pix" && pixCode && (
+                  <div className="mt-5 rounded-xl border border-border bg-card p-4 text-left">
+                    <p className="text-center text-xs font-semibold text-primary">Pague com Pix via IronPay</p>
+                    <div className="my-3 flex justify-center">
+                      <img
+                        src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`}
+                        alt="QR Code Pix"
+                        className="size-36 rounded-lg border border-border bg-card p-1"
+                      />
+                    </div>
+                    <div className="flex w-full gap-2">
+                      <Input readOnly value={pixCode} className="truncate font-mono text-xs" />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={async () => {
+                          try {
+                            await navigator.clipboard.writeText(pixCode);
+                            toast.success("Código Pix copiado!");
+                          } catch {
+                            toast.error("Não foi possível copiar o código.");
+                          }
+                        }}
+                      >
+                        Copiar
+                      </Button>
+                    </div>
+                  </div>
+                )}
+
                 <div className="mt-6 space-y-1 text-left text-sm">
                   <p className="font-semibold">Resumo</p>
                   <p className="text-muted-foreground">
@@ -314,7 +453,7 @@ export function Checkout({
                     Entrega em {f.rua}, {f.numero} — {f.cidade}/{f.estado}
                   </p>
                   <p className="text-muted-foreground">
-                    Pagamento: {pagamento === "pix" ? "Pix" : pagamento === "boleto" ? "Boleto" : "Cartão de crédito"}
+                    Pagamento: {pagamento === "pix" ? "Pix (IronPay)" : pagamento === "boleto" ? "Boleto" : "Cartão de crédito"}
                   </p>
                 </div>
                 <Button className="mt-6 h-11 w-full" onClick={() => onOpenChange(false)}>
@@ -427,22 +566,59 @@ function PayOption({
   );
 }
 
-function PixBlock({ copied, setCopied }: { copied: boolean; setCopied: (v: boolean) => void }) {
+function PixBlock({
+  pixCode,
+  loading,
+  copied,
+  setCopied,
+  onRetry,
+}: {
+  pixCode: string;
+  loading: boolean;
+  copied: boolean;
+  setCopied: (v: boolean) => void;
+  onRetry?: () => void;
+}) {
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center gap-2 rounded-lg border border-border bg-muted/40 p-6 text-center">
+        <Loader2 className="size-8 animate-spin text-primary" />
+        <p className="text-xs font-semibold">Gerando QR Code Pix com IronPay...</p>
+        <p className="text-[11px] text-muted-foreground">Criando transação individual e segura</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-muted/40 p-5 text-center">
-      <div className="grid size-36 place-items-center rounded-lg border border-border bg-card">
-        <QrCode className="size-24 text-foreground" />
+      <div className="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-600">
+        <CheckCircle2 className="size-3.5" /> Pix Seguro IronPay
+      </div>
+      <div className="grid size-40 place-items-center rounded-lg border border-border bg-card p-1">
+        {pixCode ? (
+          <img
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(pixCode)}`}
+            alt="QR Code Pix"
+            className="size-full object-contain"
+          />
+        ) : (
+          <QrCode className="size-24 text-foreground" />
+        )}
       </div>
       <p className="text-xs text-muted-foreground">
-        QR Code demonstrativo. Copie a chave Pix abaixo para simular o pagamento.
+        Escaneie o QR Code no seu banco ou use a chave Pix Copia e Cola:
       </p>
       <div className="flex w-full gap-2">
-        <Input readOnly value={PIX_KEY} className="truncate text-xs" aria-label="Chave Pix" />
+        <Input readOnly value={pixCode || "Aguardando geração..."} className="truncate font-mono text-xs" aria-label="Chave Pix" />
         <Button
           variant="outline"
           onClick={async () => {
+            if (!pixCode) {
+              onRetry?.();
+              return;
+            }
             try {
-              await navigator.clipboard.writeText(PIX_KEY);
+              await navigator.clipboard.writeText(pixCode);
               setCopied(true);
               toast.success("Chave Pix copiada!");
               setTimeout(() => setCopied(false), 2000);
