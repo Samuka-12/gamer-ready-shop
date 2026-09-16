@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PC Gamer Completo — RX 580, Core i5, SSD 250GB | Mercado Livre</title>
+  <meta name="description" content="PC Gamer Completo com Radeon RX 580, Intel Core i5, SSD 250 GB, HD externo 2 TB, gabinete RGB, monitor, teclado, mouse e headset. Frete grátis e até 10x sem juros.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            display: ['Sora', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #f5f5f5;
+      color: #333333;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    .custom-shadow {
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.12);
+    }
+    .search-shadow {
+      box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+    }
+    .zoom-container {
+      overflow: hidden;
+      position: relative;
+    }
+    .zoom-img {
+      transition: transform 0.2s ease-out;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+  <!-- ==================== HEADER (MERCADO LIVRE STYLE) ==================== -->
+  <header class="sticky top-0 z-40 w-full bg-[#FFE600] text-[#333333] shadow-sm">
+    <div class="mx-auto max-w-[1200px] px-3 sm:px-4">
+      <!-- Top Row: Logo, Search Bar, Promo Pill -->
+      <div class="flex items-center justify-between gap-2.5 pt-2.5 pb-2 sm:gap-4 md:gap-6">
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="lg:hidden text-[#333333] p-1.5 rounded-md hover:bg-black/5" aria-label="Menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Mercado Livre Logo -->
+        <a href="#" class="flex shrink-0 items-center gap-1.5 hover:opacity-95 transition-opacity" aria-label="Mercado Livre">
+          <svg class="h-8 w-auto sm:h-9" viewBox="0 0 145 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="ml-logo-symbol">
+              <circle cx="21" cy="18" r="15" fill="#FFE600" />
+              <path d="M10.8 17.2c.4-.7 1.3-.9 2-.5l3.8 2.2c.3.2.7.2 1 0l3.8-2.2c.7-.4 1.6-.2 2 .5.4.7.2 1.6-.5 2l-3.2 1.9c-.9.5-1.9.5-2.8 0l-3.2-1.9c-.7-.4-.9-1.3-.5-2z" fill="#2D3277" />
+              <path d="M8.5 14.5c.6-.4 1.4-.2 1.8.4l3.1 4.5c.3.4.8.6 1.3.6.3 0 .6-.1.9-.3l1.8-1.2c.5-.3 1.1-.3 1.6 0l1.8 1.2c.3.2.6.3.9.3.5 0 1-.2 1.3-.6l3.1-4.5c.4-.6 1.2-.8 1.8-.4.6.4.8 1.2.4 1.8l-3.1 4.5c-.7.9-1.7 1.4-2.8 1.4-.7 0-1.4-.2-2-.6l-1.4-.9c-.2-.1-.5-.1-.7 0l-1.4.9c-.6.4-1.3.6-2 .6-1.1 0-2.1-.5-2.8-1.4l-3.1-4.5c-.4-.6-.2-1.4.4-1.8z" fill="#2D3277" />
+              <circle cx="21" cy="18" r="16.5" stroke="#2D3277" stroke-width="1.2" fill="none" />
+            </g>
+            <g id="ml-logo-text" fill="#2D3277">
+              <text x="42" y="16" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="600" letter-spacing="-0.3px">mercado</text>
+              <text x="42" y="29" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13.5" font-weight="600" letter-spacing="-0.3px">livre</text>
+            </g>
+          </svg>
+        </a>
+
+        <!-- Search Bar -->
+        <form class="relative flex flex-1 max-w-[600px] items-center" onsubmit="event.preventDefault();">
+          <div class="flex w-full items-center overflow-hidden rounded-[2px] bg-white search-shadow focus-within:ring-2 focus-within:ring-blue-500/30">
+            <input type="search" placeholder="Buscar produtos, marcas e muito mais…" class="h-10 w-full border-none bg-transparent px-3.5 text-sm text-[#333333] placeholder:text-[#999999] focus:outline-none">
+            <div class="h-6 w-[1px] bg-gray-200"></div>
+            <button type="submit" class="grid h-10 w-11 place-items-center bg-white text-gray-500 hover:text-gray-800 transition-colors" aria-label="Buscar">
+              <i data-lucide="search" class="w-4.5 h-4.5 stroke-[2.2]"></i>
+            </button>
+          </div>
+        </form>
+
+        <!-- Right Banner / Promo Pill -->
+        <div class="hidden lg:flex items-center">
+          <a href="#" class="flex h-10 items-center justify-between gap-3 rounded-full bg-white px-3.5 py-1.5 custom-shadow transition hover:shadow-md" title="Assine o Meli+">
+            <div class="flex items-center gap-1 text-[13px] font-semibold text-[#2D3277]">
+              <span class="w-12"></span>
+            </div>
+            <div class="flex size-7 items-center justify-center rounded-full bg-[#E6007E] text-white">
+              <i data-lucide="plus" class="w-4.5 h-4.5 stroke-[3]"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Mobile Cart Button -->
+        <div class="flex items-center lg:hidden">
+          <button onclick="openCheckout()" class="relative p-1.5 text-[#333333] hover:text-black">
+            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+            <span id="cart-badge-mobile" class="hidden absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">0</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Bottom Row: Navigation links -->
+      <div class="hidden lg:flex items-center justify-between pb-2.5 pt-0.5 text-[13px] text-[#333333]">
+        <!-- Main navigation (left/center) -->
+        <nav class="flex items-center gap-4 xl:gap-5">
+          <!-- Dropdown Categorias -->
+          <div class="relative group">
+            <button class="flex items-center gap-1 text-[#333333]/90 hover:text-black transition-colors font-normal">
+              <span>Categorias</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70"></i>
+            </button>
+            <div class="absolute top-full left-0 mt-1 hidden group-hover:block w-56 rounded-md bg-white py-2 shadow-lg ring-1 ring-black/5 z-50">
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Informática</a>
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Games</a>
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Celulares e Telefones</a>
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Eletrônicos, Áudio e Vídeo</a>
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Casa, Móveis e Decoração</a>
+              <a href="#" class="block px-4 py-2 text-xs text-gray-700 hover:bg-gray-100">Moda</a>
+            </div>
+          </div>
+
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Ofertas</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Cupons</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Supermercado</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Moda</a>
+          
+          <!-- Mercado Play with GRÁTIS badge -->
+          <a href="#" class="relative flex items-center text-[#333333]/90 hover:text-black transition-colors">
+            <span class="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[#00a650] px-1 py-[1px] text-[8.5px] font-bold uppercase tracking-tight text-white leading-none shadow-xs">
+              GRÁTIS
+            </span>
+            <span>Mercado Play</span>
+          </a>
+
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Vender</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Contato</a>
+        </nav>
+
+        <!-- User menu & cart (right) -->
+        <div class="flex items-center gap-4 xl:gap-5">
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Crie a sua conta</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Entre</a>
+          <a href="#" class="text-[#333333]/90 hover:text-black transition-colors">Compras</a>
+          <button onclick="openCheckout()" class="relative text-[#333333]/90 hover:text-black transition-colors p-1" aria-label="Carrinho">
+            <i data-lucide="shopping-cart" class="w-4.5 h-4.5 stroke-[1.8]"></i>
+            <span id="cart-badge-desktop" class="hidden absolute -top-1 -right-1 grid size-4 place-items-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div id="mobile-drawer" class="fixed inset-0 z-50 bg-black/50 hidden transition-opacity">
+    <div class="w-72 bg-white h-full p-4 overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3 mb-3">
+        <span class="font-bold text-[#2D3277]">Mercado Livre</span>
+        <button id="close-drawer-btn" class="p-1 text-gray-500 hover:text-black">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div class="space-y-2 text-sm text-gray-700">
+        <p class="text-xs font-bold text-gray-400 uppercase">Categorias</p>
+        <a href="#" class="block py-1 hover:text-blue-600">Informática</a>
+        <a href="#" class="block py-1 hover:text-blue-600">Games</a>
+        <a href="#" class="block py-1 hover:text-blue-600">Celulares</a>
+        <a href="#" class="block py-1 hover:text-blue-600">Eletrônicos</a>
+        <div class="border-t pt-2 my-2">
+          <a href="#" class="block py-1.5 font-medium">Ofertas</a>
+          <a href="#" class="block py-1.5 font-medium">Cupons</a>
+          <a href="#" class="block py-1.5 font-medium">Supermercado</a>
+          <a href="#" class="block py-1.5 font-medium">Moda</a>
+          <a href="#" class="flex items-center justify-between py-1.5 font-medium">
+            <span>Mercado Play</span>
+            <span class="rounded bg-[#00a650] px-1 text-[9px] font-bold text-white">GRÁTIS</span>
+          </a>
+          <a href="#" class="block py-1.5 font-medium">Vender</a>
+          <a href="#" class="block py-1.5 font-medium">Contato</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="mx-auto max-w-[1200px] px-3 sm:px-4 py-4 sm:py-6 flex-1 w-full">
+
+    <!-- Breadcrumb -->
+    <nav class="mb-4 flex flex-wrap items-center gap-1.5 text-xs text-gray-500">
+      <a href="#" class="hover:text-blue-600">Início</a>
+      <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400"></i>
+      <a href="#" class="hover:text-blue-600">Informática</a>
+      <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400"></i>
+      <a href="#" class="hover:text-blue-600">PC Gamer</a>
+      <i data-lucide="chevron-right" class="w-3 h-3 text-gray-400"></i>
+      <span class="text-gray-700 font-medium">Computadores</span>
+    </nav>
+
+    <!-- Product Card Container -->
+    <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-4 sm:p-6 lg:p-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+        
+        <!-- LEFT: Product Gallery (5 cols) -->
+        <div class="lg:col-span-6 xl:col-span-5 flex flex-col md:flex-row gap-4">
+          <!-- Thumbnails (Desktop) -->
+          <div class="hidden md:flex flex-col gap-2.5 w-16 shrink-0">
+            <button onclick="changeImage(0)" class="thumb-btn border-2 border-blue-600 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition">
+              <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" alt="Thumbnail 1" class="w-full aspect-square object-contain">
+            </button>
+            <button onclick="changeImage(1)" class="thumb-btn border border-gray-200 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition opacity-70 hover:opacity-100">
+              <img src="https://http2.mlstatic.com/D_NQ_NP_2X_928296-MLA110076286300_042026-F.webp" alt="Thumbnail 2" class="w-full aspect-square object-contain">
+            </button>
+          </div>
+
+          <!-- Main Image with Zoom -->
+          <div class="relative flex-1 group">
+            <div id="zoom-box" class="zoom-container aspect-square rounded-xl border border-gray-200 bg-white flex items-center justify-center p-2 cursor-crosshair">
+              <img id="main-product-img" src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" alt="PC Gamer Completo" class="zoom-img max-h-full max-w-full object-contain">
+            </div>
+            <span class="pointer-events-none absolute bottom-3 right-3 hidden group-hover:flex items-center gap-1.5 rounded-full bg-black/75 px-3 py-1 text-xs text-white">
+              <i data-lucide="zoom-in" class="w-3.5 h-3.5"></i> Passe o mouse para ampliar
+            </span>
+            <!-- Mobile Thumbnails Navigation -->
+            <div class="flex md:hidden justify-center gap-2 mt-3">
+              <button onclick="changeImage(0)" class="size-2.5 rounded-full bg-blue-600 mobile-indicator"></button>
+              <button onclick="changeImage(1)" class="size-2.5 rounded-full bg-gray-300 mobile-indicator"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER: Product Title, Ratings & Details (4 cols) -->
+        <div class="lg:col-span-6 xl:col-span-4 flex flex-col justify-between">
+          <div>
+            <!-- Badge & SKU -->
+            <div class="flex items-center gap-2 text-xs text-gray-500">
+              <span class="rounded bg-gray-100 px-2 py-0.5 font-medium text-gray-600">Produto novo</span>
+              <span>SKU: PCG-COMPLETO-001</span>
+              <button onclick="copyShareLink()" class="ml-auto flex items-center gap-1 text-gray-500 hover:text-blue-600">
+                <i data-lucide="share-2" class="w-3.5 h-3.5"></i> Compartilhar
+              </button>
+            </div>
+
+            <!-- Product Title -->
+            <h1 class="mt-2.5 text-2xl sm:text-3xl font-bold font-display text-gray-900 leading-tight">
+              PC Gamer Completo
+            </h1>
+
+            <!-- Rating Stars -->
+            <div class="mt-2.5 flex items-center gap-2">
+              <div class="flex text-amber-400">
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+              </div>
+              <span class="text-xs text-gray-500">4.8 (128 avaliações)</span>
+            </div>
+
+            <!-- Price Block -->
+            <div class="mt-5 border-t border-b border-gray-100 py-4">
+              <!-- Riscado Original -->
+              <p class="text-sm text-gray-400 line-through">
+                R$ 2.560,20
+              </p>
+              
+              <!-- Preço Atual + Desconto -->
+              <div class="mt-1 flex flex-wrap items-baseline gap-3">
+                <span class="text-4xl sm:text-5xl font-extrabold text-gray-900 font-display tracking-tight">
+                  R$ 1.300,00
+                </span>
+                <span class="rounded-md bg-emerald-100 px-2 py-0.5 text-sm font-bold text-emerald-700">
+                  49% OFF
+                </span>
+              </div>
+
+              <!-- Parcelamento -->
+              <p class="mt-2 text-sm text-emerald-600 font-medium">
+                em até <strong class="font-bold text-emerald-700">10x de R$ 130,00</strong> sem juros
+              </p>
+            </div>
+
+            <!-- Highlight Badges -->
+            <div class="mt-5 grid grid-cols-2 gap-2.5">
+              <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
+                <p class="text-xs font-semibold text-gray-900">Radeon RX 580</p>
+                <p class="text-[11px] text-gray-500">Placa de vídeo dedicada</p>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
+                <p class="text-xs font-semibold text-gray-900">Intel Core i5</p>
+                <p class="text-[11px] text-gray-500">Processador potente</p>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
+                <p class="text-xs font-semibold text-gray-900">SSD 250 GB</p>
+                <p class="text-[11px] text-gray-500">Sistema ultrarrápido</p>
+              </div>
+              <div class="rounded-lg bg-gray-50 p-2.5 border border-gray-100">
+                <p class="text-xs font-semibold text-gray-900">HD 2 TB Externo</p>
+                <p class="text-[11px] text-gray-500">Armazenamento extra</p>
+              </div>
+            </div>
+
+            <!-- Trust Icons -->
+            <div class="mt-5 flex flex-wrap gap-4 text-xs text-gray-600">
+              <span class="flex items-center gap-1.5"><i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> Frete grátis</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i> Compra garantida</span>
+              <span class="flex items-center gap-1.5"><i data-lucide="lock" class="w-4 h-4 text-blue-600"></i> Pagamento seguro</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Buy Box Card (3 cols) -->
+        <div class="lg:col-span-12 xl:col-span-3">
+          <div class="rounded-xl border border-gray-200 bg-gray-50/50 p-5 shadow-xs">
+            
+            <p class="flex items-center gap-2 text-sm font-semibold text-emerald-600">
+              <i data-lucide="truck" class="w-4.5 h-4.5"></i> Frete grátis para todo o Brasil
+            </p>
+            <p class="text-xs text-gray-500 mt-0.5 ml-6.5">Chega entre 3 e 7 dias úteis</p>
+
+            <!-- Quantity Selector -->
+            <div class="mt-4">
+              <label class="text-xs font-medium text-gray-600">Quantidade:</label>
+              <div class="mt-1.5 flex items-center gap-3">
+                <div class="flex items-center rounded-lg border border-gray-300 bg-white">
+                  <button onclick="adjustQty(-1)" class="p-2 text-gray-600 hover:text-black">
+                    <i data-lucide="minus" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <span id="qty-val" class="w-8 text-center text-sm font-semibold">1</span>
+                  <button onclick="adjustQty(1)" class="p-2 text-gray-600 hover:text-black">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <span class="text-xs text-gray-500">(8 disponíveis)</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-5 space-y-2.5">
+              <button onclick="openCheckout()" class="w-full rounded-lg bg-blue-600 py-3.5 text-base font-semibold text-white shadow-sm hover:bg-blue-700 transition flex items-center justify-center gap-2">
+                Comprar agora
+              </button>
+              <button onclick="addToCart()" class="w-full rounded-lg bg-blue-50 py-3 text-base font-semibold text-blue-700 hover:bg-blue-100 transition">
+                Adicionar ao carrinho
+              </button>
+            </div>
+
+            <hr class="my-4 border-gray-200">
+
+            <!-- CEP Shipping Simulator -->
+            <div>
+              <label for="cep-input" class="text-xs font-semibold text-gray-700">Calcular frete e prazo</label>
+              <div class="mt-1.5 flex gap-2">
+                <input id="cep-input" type="text" maxlength="9" placeholder="00000-000" class="h-9 w-full rounded-md border border-gray-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none">
+                <button onclick="calcularFrete()" class="h-9 rounded-md bg-gray-200 px-3.5 text-xs font-semibold text-gray-700 hover:bg-gray-300 transition">
+                  Calcular
+                </button>
+              </div>
+              <div id="frete-resultado" class="mt-2.5 hidden space-y-1.5 text-xs">
+                <div class="flex justify-between p-2 rounded bg-emerald-50 text-emerald-800 border border-emerald-200">
+                  <span>Frete Grátis (Econômico) · 5-7 dias</span>
+                  <strong class="font-bold">Grátis</strong>
+                </div>
+                <div class="flex justify-between p-2 rounded bg-gray-100 text-gray-800">
+                  <span>Sedex Expresso · 2-3 dias</span>
+                  <strong>R$ 38,90</strong>
+                </div>
+              </div>
+            </div>
+
+            <hr class="my-4 border-gray-200">
+
+            <!-- Seller Info -->
+            <div class="flex items-start gap-3">
+              <div class="grid size-9 shrink-0 place-items-center rounded-full bg-blue-100 text-blue-700">
+                <i data-lucide="store" class="w-4.5 h-4.5"></i>
+              </div>
+              <div class="text-xs">
+                <p class="font-bold text-gray-900">TechStore Oficial</p>
+                <p class="text-emerald-600 font-medium flex items-center gap-1">
+                  <i data-lucide="award" class="w-3.5 h-3.5"></i> MercadoLíder Platinum
+                </p>
+                <p class="text-gray-500 mt-0.5">+5 mil vendas · São Paulo, SP</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SECTIONS ==================== -->
+    <div class="mt-6 space-y-6">
+      
+      <!-- Destaques -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">Destaques do produto</h2>
+        <div class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+            <i data-lucide="tv" class="w-5 h-5 text-blue-600"></i>
+            <p class="mt-3 font-semibold text-gray-900 leading-tight">Radeon RX 580</p>
+            <p class="text-xs text-gray-500 mt-0.5">Placa de vídeo dedicada</p>
+          </div>
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+            <i data-lucide="cpu" class="w-5 h-5 text-blue-600"></i>
+            <p class="mt-3 font-semibold text-gray-900 leading-tight">Intel Core i5</p>
+            <p class="text-xs text-gray-500 mt-0.5">Processador potente</p>
+          </div>
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+            <i data-lucide="zap" class="w-5 h-5 text-blue-600"></i>
+            <p class="mt-3 font-semibold text-gray-900 leading-tight">SSD 250 GB</p>
+            <p class="text-xs text-gray-500 mt-0.5">Inicialização rápida</p>
+          </div>
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+            <i data-lucide="hard-drive" class="w-5 h-5 text-blue-600"></i>
+            <p class="mt-3 font-semibold text-gray-900 leading-tight">2 TB Externo</p>
+            <p class="text-xs text-gray-500 mt-0.5">Armazenamento extra</p>
+          </div>
+          <div class="rounded-xl border border-gray-100 bg-gray-50 p-4">
+            <i data-lucide="monitor" class="w-5 h-5 text-blue-600"></i>
+            <p class="mt-3 font-semibold text-gray-900 leading-tight">Kit Completo</p>
+            <p class="text-xs text-gray-500 mt-0.5">Monitor, mouse, teclado, fone</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Características Técnicas -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">Características técnicas</h2>
+        <div class="mt-4 overflow-hidden rounded-lg border border-gray-200">
+          <table class="w-full text-sm">
+            <tbody class="divide-y divide-gray-200">
+              <tr class="bg-gray-50"><th class="w-1/2 px-4 py-3 text-left font-medium text-gray-600">Placa de vídeo</th><td class="px-4 py-3 font-semibold">Radeon RX 580</td></tr>
+              <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Processador</th><td class="px-4 py-3 font-semibold">Intel Core i5</td></tr>
+              <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Armazenamento SSD</th><td class="px-4 py-3 font-semibold">250 GB</td></tr>
+              <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Armazenamento externo</th><td class="px-4 py-3 font-semibold">2 TB</td></tr>
+              <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Gabinete</th><td class="px-4 py-3 font-semibold">Gamer com iluminação RGB</td></tr>
+              <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Monitor</th><td class="px-4 py-3 font-semibold">Incluso — alta definição</td></tr>
+              <tr class="bg-gray-50"><th class="px-4 py-3 text-left font-medium text-gray-600">Periféricos</th><td class="px-4 py-3 font-semibold">Teclado gamer, Mouse gamer e Headset incluso</td></tr>
+              <tr class="bg-white"><th class="px-4 py-3 text-left font-medium text-gray-600">Condição</th><td class="px-4 py-3 font-semibold">Produto novo</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Sobre este produto -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">Sobre este produto</h2>
+        <div class="mt-4 space-y-4 text-sm text-gray-600 leading-relaxed">
+          <div>
+            <h3 class="font-bold text-gray-900 text-base">Desempenho para jogar</h3>
+            <p class="mt-1">A combinação de processador Intel Core i5 com placa de vídeo dedicada Radeon RX 580 entrega alto desempenho para jogos e para tarefas diárias.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-base">Armazenamento híbrido inteligente</h3>
+            <p class="mt-1">SSD de 250 GB para inicialização rápida do sistema operacional somado a 2 TB de armazenamento externo para biblioteca de jogos e backups.</p>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-base">Setup completo pronto para usar</h3>
+            <p class="mt-1">Você recebe o computador com gabinete gamer RGB acompanhado de monitor, teclado gamer, mouse e headset. É só conectar e jogar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- O que vem na caixa? -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">O que vem na caixa?</h2>
+        <ul class="mt-4 grid gap-2.5 sm:grid-cols-2 text-sm text-gray-700">
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Gabinete Gamer com iluminação RGB
+          </li>
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Monitor
+          </li>
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Teclado Gamer
+          </li>
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Mouse Gamer
+          </li>
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x Headset Gamer
+          </li>
+          <li class="flex items-center gap-3 rounded-lg bg-gray-50 border border-gray-100 px-4 py-3">
+            <i data-lucide="package" class="w-4.5 h-4.5 text-blue-600 shrink-0"></i> 1x HD Externo 2 TB + Cabos e Manual
+          </li>
+        </ul>
+      </section>
+
+      <!-- Perguntas e Respostas -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">Perguntas e respostas</h2>
+        <div class="mt-4">
+          <div class="flex flex-col sm:flex-row gap-2">
+            <input id="faq-input" type="text" placeholder="Escreva sua pergunta sobre o produto…" class="h-11 flex-1 rounded-lg border border-gray-300 px-3.5 text-sm focus:border-blue-500 focus:outline-none">
+            <button onclick="enviarPergunta()" class="h-11 rounded-lg bg-blue-600 px-6 text-sm font-semibold text-white hover:bg-blue-700 transition flex items-center justify-center gap-1.5">
+              <i data-lucide="send" class="w-4 h-4"></i> Perguntar
+            </button>
+          </div>
+          <hr class="my-5 border-gray-200">
+          <p class="text-sm font-bold text-gray-900 mb-3">Últimas perguntas realizadas</p>
+          <div class="space-y-4 text-sm">
+            <div>
+              <p class="font-semibold text-gray-800">O computador já vem montado e pronto para uso?</p>
+              <p class="mt-1 pl-3 border-l-2 border-gray-300 text-gray-600">Sim! O PC vai 100% montado, testado e com todos os periféricos inclusos.</p>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-800">Roda os jogos atuais como GTA V, Valorant e Free Fire?</p>
+              <p class="mt-1 pl-3 border-l-2 border-gray-300 text-gray-600">Sim! A placa Radeon RX 580 roda com ótima taxa de quadros e excelente fluidez.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Meios de Pagamento -->
+      <section class="rounded-xl border border-gray-200 bg-white p-5 sm:p-7 shadow-xs">
+        <h2 class="text-xl font-bold font-display text-gray-900">Meios de pagamento</h2>
+        <div class="mt-4 grid gap-6 sm:grid-cols-3">
+          <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <p class="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+              <i data-lucide="qr-code" class="w-4 h-4 text-emerald-600"></i> Pix
+            </p>
+            <p class="mt-1 text-xs text-gray-500">Aprovação imediata em poucos segundos.</p>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <p class="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+              <i data-lucide="credit-card" class="w-4 h-4 text-blue-600"></i> Cartão de Crédito
+            </p>
+            <p class="mt-1 text-xs text-gray-500">Em até 10x de R$ 130,00 sem juros.</p>
+          </div>
+          <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
+            <p class="flex items-center gap-2 font-semibold text-gray-900 text-sm">
+              <i data-lucide="barcode" class="w-4 h-4 text-gray-700"></i> Boleto Bancário
+            </p>
+            <p class="mt-1 text-xs text-gray-500">Compensação em até 2 dias úteis.</p>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="mt-10 border-t border-gray-200 bg-white py-8">
+    <div class="mx-auto max-w-[1200px] px-4 text-xs text-gray-500">
+      <p class="font-bold text-sm text-gray-800">Mercado Livre</p>
+      <p class="mt-2">Copyright © 1999-2026 MercadoLivre LTDA. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- ==================== MOBILE FLOATING PURCHASE BAR ==================== -->
+  <div class="fixed inset-x-0 bottom-0 z-30 border-t border-gray-200 bg-white/95 p-3 backdrop-blur lg:hidden flex items-center justify-between gap-3 shadow-lg">
+    <div>
+      <p class="font-display text-lg font-bold text-gray-900">R$ 1.300,00</p>
+      <p class="text-[11px] text-emerald-600">10x de R$ 130,00 sem juros</p>
+    </div>
+    <div class="flex gap-2">
+      <button onclick="addToCart()" class="rounded-lg bg-blue-50 px-3.5 py-2.5 text-xs font-semibold text-blue-700 hover:bg-blue-100">
+        Carrinho
+      </button>
+      <button onclick="openCheckout()" class="rounded-lg bg-blue-600 px-4 py-2.5 text-xs font-semibold text-white hover:bg-blue-700 shadow-sm">
+        Comprar agora
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== CHECKOUT MODAL ==================== -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden my-auto max-h-[95vh] flex flex-col">
+      
+      <!-- Header Modal -->
+      <div class="flex items-center justify-between border-b px-5 py-3.5 bg-gray-50">
+        <div class="flex items-center gap-2">
+          <div class="size-2 rounded-full bg-emerald-500"></div>
+          <span class="font-bold text-sm text-gray-800 font-display">Checkout Seguro</span>
+        </div>
+        <button onclick="closeCheckout()" class="p-1 rounded-md text-gray-400 hover:text-black">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="p-5 sm:p-6 overflow-y-auto space-y-4">
+        
+        <!-- Summary Box -->
+        <div class="rounded-xl bg-gray-50 border border-gray-200 p-3.5 flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <img src="https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp" class="size-12 rounded object-contain bg-white border">
+            <div>
+              <p class="font-bold text-xs text-gray-900">PC Gamer Completo</p>
+              <p class="text-[11px] text-gray-500">Qtd: <span id="modal-qty">1</span>x · Frete Grátis</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <p id="modal-total-price" class="font-bold text-base text-gray-900">R$ 1.300,00</p>
+            <p class="text-[10px] text-emerald-600 font-medium">Economia de 49%</p>
+          </div>
+        </div>
+
+        <!-- Checkout Form -->
+        <form id="checkout-form" onsubmit="handleFinalizarCompra(event)" class="space-y-4">
+          
+          <!-- Dados Pessoais -->
+          <div>
+            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">1. Dados Pessoais</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <input type="text" required placeholder="Nome completo" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="text" required id="form-cpf" placeholder="CPF (000.000.000-00)" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="email" required placeholder="E-mail" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+              <input type="tel" required id="form-phone" placeholder="WhatsApp / Telefone" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none w-full">
+            </div>
+          </div>
+
+          <!-- Endereço -->
+          <div>
+            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">2. Endereço de Entrega</h4>
+            <div class="grid grid-cols-3 gap-2.5">
+              <input type="text" required id="form-cep" placeholder="CEP" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-rua" placeholder="Rua / Avenida" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-2">
+              <input type="text" required placeholder="Número" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-bairro" placeholder="Bairro" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+              <input type="text" required id="form-cidade" placeholder="Cidade" class="h-9 rounded-md border border-gray-300 px-3 text-xs focus:border-blue-500 focus:outline-none col-span-1">
+            </div>
+          </div>
+
+          <!-- Pagamento -->
+          <div>
+            <h4 class="text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">3. Forma de Pagamento</h4>
+            <div class="grid grid-cols-3 gap-2 text-xs">
+              <label class="cursor-pointer flex flex-col items-center gap-1 rounded-lg border-2 border-emerald-500 bg-emerald-50/40 p-2.5 text-center font-semibold text-emerald-800">
+                <input type="radio" name="payment-method" value="pix" checked class="hidden" onchange="togglePaymentUI('pix')">
+                <i data-lucide="qr-code" class="w-4 h-4 text-emerald-600"></i> Pix (Imediato)
+              </label>
+              <label class="cursor-pointer flex flex-col items-center gap-1 rounded-lg border border-gray-200 p-2.5 text-center font-medium text-gray-700 hover:border-gray-400">
+                <input type="radio" name="payment-method" value="card" class="hidden" onchange="togglePaymentUI('card')">
+                <i data-lucide="credit-card" class="w-4 h-4 text-blue-600"></i> Cartão
+              </label>
+              <label class="cursor-pointer flex flex-col items-center gap-1 rounded-lg border border-gray-200 p-2.5 text-center font-medium text-gray-700 hover:border-gray-400">
+                <input type="radio" name="payment-method" value="boleto" class="hidden" onchange="togglePaymentUI('boleto')">
+                <i data-lucide="barcode" class="w-4 h-4 text-gray-600"></i> Boleto
+              </label>
+            </div>
+
+            <!-- PIX Box -->
+            <div id="pix-container" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50/50 p-4 text-center">
+              <div class="mx-auto size-32 bg-white p-2 rounded-lg border border-emerald-300 shadow-xs flex items-center justify-center">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" alt="QR Code Pix" class="size-full">
+              </div>
+              <p class="mt-2 text-xs font-semibold text-emerald-900">Escaneie o QR Code ou copie a chave Pix</p>
+              <div class="mt-2 flex gap-2">
+                <input type="text" readonly value="00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" class="h-8 w-full rounded border border-emerald-300 bg-white px-2 text-[11px] text-gray-600 focus:outline-none">
+                <button type="button" onclick="copyPix()" class="h-8 shrink-0 rounded bg-emerald-600 px-3 text-xs font-bold text-white hover:bg-emerald-700">Copiar</button>
+              </div>
+            </div>
+
+            <!-- Card Box (Hidden by default) -->
+            <div id="card-container" class="mt-3 hidden rounded-lg border border-blue-200 bg-blue-50/30 p-3 space-y-2 text-xs">
+              <input type="text" placeholder="Número do cartão" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" placeholder="Validade (MM/AA)" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
+                <input type="text" placeholder="CVV" maxlength="4" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
+              </div>
+              <select class="h-8.5 rounded border border-gray-300 px-2 w-full bg-white text-xs">
+                <option>1x de R$ 1.300,00 sem juros</option>
+                <option>5x de R$ 260,00 sem juros</option>
+                <option selected>10x de R$ 130,00 sem juros</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2">
+            <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido
+          </button>
+
+        </form>
+
+        <!-- Success Message Screen -->
+        <div id="success-screen" class="hidden text-center py-6 space-y-3">
+          <div class="mx-auto size-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="check" class="w-8 h-8 stroke-[3]"></i>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 font-display">Pedido Realizado com Sucesso!</h3>
+          <p class="text-xs text-gray-500">Código do pedido: <strong class="text-gray-800">#ML-89421</strong></p>
+          <p class="text-xs text-emerald-700 bg-emerald-50 p-3 rounded-lg border border-emerald-200">
+            Você receberá as atualizações do envio e rastreamento no seu e-mail e WhatsApp!
+          </p>
+          <button onclick="closeCheckout()" class="mt-4 rounded-lg bg-blue-600 px-6 py-2.5 text-xs font-semibold text-white hover:bg-blue-700">
+            Voltar para o produto
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed top-5 right-5 z-50 hidden rounded-xl bg-gray-900 text-white px-4 py-3 text-xs font-medium shadow-xl flex items-center gap-2">
+    <i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>
+    <span id="toast-msg">Mensagem</span>
+  </div>
+
+  <!-- ==================== JAVASCRIPT ==================== -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // State
+    let currentQty = 1;
+    let currentImg = 0;
+    let cartItems = 0;
+    const unitPrice = 1300.00;
+
+    const images = [
+      "https://http2.mlstatic.com/D_NQ_NP_2X_744849-MLA110989412319_042026-F.webp",
+      "https://http2.mlstatic.com/D_NQ_NP_2X_928296-MLA110076286300_042026-F.webp"
+    ];
+
+    function changeImage(idx) {
+      currentImg = idx;
+      document.getElementById('main-product-img').src = images[idx];
+      
+      const thumbs = document.querySelectorAll('.thumb-btn');
+      thumbs.forEach((t, i) => {
+        if (i === idx) {
+          t.className = "thumb-btn border-2 border-blue-600 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition";
+        } else {
+          t.className = "thumb-btn border border-gray-200 rounded-lg p-1 overflow-hidden bg-white hover:border-blue-500 transition opacity-70 hover:opacity-100";
+        }
+      });
+
+      const dots = document.querySelectorAll('.mobile-indicator');
+      dots.forEach((d, i) => {
+        d.className = i === idx ? "size-2.5 rounded-full bg-blue-600 mobile-indicator" : "size-2.5 rounded-full bg-gray-300 mobile-indicator";
+      });
+    }
+
+    // Zoom on hover
+    const zoomBox = document.getElementById('zoom-box');
+    const mainImg = document.getElementById('main-product-img');
+    zoomBox.addEventListener('mousemove', (e) => {
+      const rect = zoomBox.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      mainImg.style.transformOrigin = `${x}% ${y}%`;
+      mainImg.style.transform = 'scale(1.9)';
+    });
+    zoomBox.addEventListener('mouseleave', () => {
+      mainImg.style.transform = 'scale(1)';
+    });
+
+    // Quantity
+    function adjustQty(d) {
+      currentQty = Math.max(1, Math.min(8, currentQty + d));
+      document.getElementById('qty-val').innerText = currentQty;
+      updateModalTotals();
+    }
+
+    function updateModalTotals() {
+      const total = currentQty * unitPrice;
+      document.getElementById('modal-qty').innerText = currentQty;
+      document.getElementById('modal-total-price').innerText = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Toast
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 3000);
+    }
+
+    // Add to Cart
+    function addToCart() {
+      cartItems += currentQty;
+      document.getElementById('cart-badge-desktop').innerText = cartItems;
+      document.getElementById('cart-badge-desktop').classList.remove('hidden');
+      document.getElementById('cart-badge-mobile').innerText = cartItems;
+      document.getElementById('cart-badge-mobile').classList.remove('hidden');
+      showToast(`${currentQty}x PC Gamer adicionado ao carrinho!`);
+    }
+
+    // Share link
+    function copyShareLink() {
+      navigator.clipboard.writeText(window.location.href);
+      showToast("Link copiado para a área de transferência!");
+    }
+
+    // CEP Shipping
+    function calcularFrete() {
+      const cep = document.getElementById('cep-input').value.replace(/\D/g, '');
+      if (cep.length === 8) {
+        document.getElementById('frete-resultado').classList.remove('hidden');
+      } else {
+        showToast("Digite um CEP válido com 8 dígitos.");
+      }
+    }
+
+    // FAQ
+    function enviarPergunta() {
+      const val = document.getElementById('faq-input').value.trim();
+      if (!val) {
+        showToast("Digite sua pergunta antes de enviar.");
+        return;
+      }
+      document.getElementById('faq-input').value = "";
+      showToast("Pergunta enviada com sucesso! O vendedor responderá em breve.");
+    }
+
+    // Mobile Drawer
+    const drawer = document.getElementById('mobile-drawer');
+    document.getElementById('mobile-menu-btn').onclick = () => drawer.classList.remove('hidden');
+    document.getElementById('close-drawer-btn').onclick = () => drawer.classList.add('hidden');
+
+    // Checkout Modal
+    const modal = document.getElementById('checkout-modal');
+    function openCheckout() {
+      updateModalTotals();
+      document.getElementById('checkout-form').classList.remove('hidden');
+      document.getElementById('success-screen').classList.add('hidden');
+      modal.classList.remove('hidden');
+    }
+    function closeCheckout() {
+      modal.classList.add('hidden');
+    }
+
+    function togglePaymentUI(type) {
+      const pix = document.getElementById('pix-container');
+      const card = document.getElementById('card-container');
+      if (type === 'pix') {
+        pix.classList.remove('hidden');
+        card.classList.add('hidden');
+      } else if (type === 'card') {
+        pix.classList.add('hidden');
+        card.classList.remove('hidden');
+      } else {
+        pix.classList.add('hidden');
+        card.classList.add('hidden');
+      }
+    }
+
+    function copyPix() {
+      navigator.clipboard.writeText("00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR");
+      showToast("Chave Pix copiada com sucesso!");
+    }
+
+    function handleFinalizarCompra(e) {
+      e.preventDefault();
+      document.getElementById('checkout-form').classList.add('hidden');
+      document.getElementById('success-screen').classList.remove('hidden');
+    }
+
+    // CEP AutoFill
+    document.getElementById('form-cep').addEventListener('blur', (e) => {
+      const val = e.target.value.replace(/\D/g, '');
+      if (val.length === 8) {
+        document.getElementById('form-rua').value = "Avenida Paulista";
+        document.getElementById('form-bairro').value = "Bela Vista";
+        document.getElementById('form-cidade').value = "São Paulo";
+      }
+    });
+  </script>
+</body>
+</html>
