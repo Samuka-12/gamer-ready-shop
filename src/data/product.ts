@@ -25,9 +25,9 @@ export const product = {
   ],
   // Preços demonstrativos — fáceis de alterar
   precoOriginal: 2560.2,
-  precoPromocional: 1300.0,
-  percentualDesconto: 49,
-  parcelamento: { vezes: 10, valor: 130.0, juros: false },
+  precoPromocional: 1000.0,
+  percentualDesconto: 61,
+  parcelamento: { vezes: 10, valor: 100.0, juros: false },
   estoque: 1,
   maxPorCompra: 1,
   highlights: [

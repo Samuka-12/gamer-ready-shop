@@ -259,16 +259,16 @@ const html = `<!DOCTYPE html>
               <!-- Preço Atual + Desconto -->
               <div class="mt-1 flex flex-wrap items-baseline gap-3">
                 <span class="text-4xl sm:text-5xl font-extrabold text-gray-900 font-display tracking-tight">
-                  R$ 1.300,00
+                  R$ 1.000,00
                 </span>
                 <span class="rounded-md bg-emerald-100 px-2 py-0.5 text-sm font-bold text-emerald-700">
-                  49% OFF
+                  61% OFF
                 </span>
               </div>
 
               <!-- Parcelamento -->
               <p class="mt-2 text-sm text-emerald-600 font-medium">
-                em até <strong class="font-bold text-emerald-700">10x de R$ 130,00</strong> sem juros
+                em até <strong class="font-bold text-emerald-700">10x de R$ 100,00</strong> sem juros
               </p>
             </div>
 
@@ -614,7 +614,7 @@ const html = `<!DOCTYPE html>
             <p class="flex items-center gap-2 font-semibold text-gray-900 text-sm">
               <i data-lucide="credit-card" class="w-4 h-4 text-blue-600"></i> Cartão de Crédito
             </p>
-            <p class="mt-1 text-xs text-gray-500">Em até 10x de R$ 130,00 sem juros.</p>
+            <p class="mt-1 text-xs text-gray-500">Em até 10x de R$ 100,00 sem juros.</p>
           </div>
           <div class="p-3 bg-gray-50 rounded-lg border border-gray-100">
             <p class="flex items-center gap-2 font-semibold text-gray-900 text-sm">
@@ -640,8 +640,8 @@ const html = `<!DOCTYPE html>
   <!-- ==================== MOBILE FLOATING PURCHASE BAR ==================== -->
   <div class="fixed inset-x-0 bottom-0 z-30 border-t border-gray-200 bg-white/95 p-3 backdrop-blur lg:hidden flex items-center justify-between gap-3 shadow-lg">
     <div>
-      <p class="font-display text-lg font-bold text-gray-900">R$ 1.300,00</p>
-      <p class="text-[11px] text-emerald-600">10x de R$ 130,00 sem juros</p>
+      <p class="font-display text-lg font-bold text-gray-900">R$ 1.000,00</p>
+      <p class="text-[11px] text-emerald-600">10x de R$ 100,00 sem juros</p>
     </div>
     <div class="flex gap-2">
       <button onclick="addToCart()" class="rounded-lg bg-blue-50 px-3.5 py-2.5 text-xs font-semibold text-blue-700 hover:bg-blue-100">
@@ -681,8 +681,8 @@ const html = `<!DOCTYPE html>
             </div>
           </div>
           <div class="text-right">
-            <p id="modal-total-price" class="font-bold text-base text-gray-900">R$ 1.300,00</p>
-            <p class="text-[10px] text-emerald-600 font-medium">Economia de 49%</p>
+            <p id="modal-total-price" class="font-bold text-base text-gray-900">R$ 1.000,00</p>
+            <p class="text-[10px] text-emerald-600 font-medium">Economia de 61%</p>
           </div>
         </div>
 
@@ -733,11 +733,11 @@ const html = `<!DOCTYPE html>
             <!-- PIX Box -->
             <div id="pix-container" class="mt-3 rounded-lg border border-emerald-200 bg-emerald-50/50 p-4 text-center">
               <div class="mx-auto size-32 bg-white p-2 rounded-lg border border-emerald-300 shadow-xs flex items-center justify-center">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" alt="QR Code Pix" class="size-full">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-10005204000053039865802BR" alt="QR Code Pix" class="size-full">
               </div>
               <p class="mt-2 text-xs font-semibold text-emerald-900">Escaneie o QR Code ou copie a chave Pix</p>
               <div class="mt-2 flex gap-2">
-                <input type="text" readonly value="00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR" class="h-8 w-full rounded border border-emerald-300 bg-white px-2 text-[11px] text-gray-600 focus:outline-none">
+                <input type="text" readonly value="00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-10005204000053039865802BR" class="h-8 w-full rounded border border-emerald-300 bg-white px-2 text-[11px] text-gray-600 focus:outline-none">
                 <button type="button" onclick="copyPix()" class="h-8 shrink-0 rounded bg-emerald-600 px-3 text-xs font-bold text-white hover:bg-emerald-700">Copiar</button>
               </div>
             </div>
@@ -751,17 +751,17 @@ const html = `<!DOCTYPE html>
                 <input type="text" placeholder="CVV" maxlength="4" class="h-8.5 rounded border border-gray-300 px-3 w-full bg-white focus:outline-none">
               </div>
               <select class="h-8.5 rounded border border-gray-300 px-2 w-full bg-white text-xs">
-                <option>1x de R$ 1.300,00 sem juros</option>
-                <option>2x de R$ 650,00 sem juros</option>
-                <option>3x de R$ 433,33 sem juros</option>
-                <option>5x de R$ 260,00 sem juros</option>
-                <option selected>10x de R$ 130,00 sem juros</option>
+                <option>1x de R$ 1.000,00 sem juros</option>
+                <option>2x de R$ 500,00 sem juros</option>
+                <option>3x de R$ 333,33 sem juros</option>
+                <option>5x de R$ 200,00 sem juros</option>
+                <option selected>10x de R$ 100,00 sem juros</option>
               </select>
             </div>
           </div>
 
           <button type="submit" class="w-full rounded-xl bg-emerald-600 py-3.5 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition flex items-center justify-center gap-2">
-            <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido (R$ 1.300,00)
+            <i data-lucide="check-circle" class="w-4.5 h-4.5"></i> Concluir Pedido (R$ 1.000,00)
           </button>
 
         </form>
@@ -937,7 +937,7 @@ const html = `<!DOCTYPE html>
     }
 
     function copyPix() {
-      navigator.clipboard.writeText("00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-13005204000053039865802BR");
+      navigator.clipboard.writeText("00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-10005204000053039865802BR");
       showToast("Chave Pix copiada com sucesso!");
     }
 

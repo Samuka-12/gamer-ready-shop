@@ -26,7 +26,7 @@ const CEP_MOCK: Record<string, { rua: string; bairro: string; cidade: string; es
   },
 };
 
-const PIX_KEY = "00020126580014BR.GOV.BCB.PIX0136novashop-demo-pix-5204000053039865802BR";
+const PIX_KEY = "00020126580014BR.GOV.BCB.PIX0136novashop-pcgamer-10005204000053039865802BR";
 
 export function Checkout({
   open,
@@ -430,8 +430,12 @@ function PayOption({
 function PixBlock({ copied, setCopied }: { copied: boolean; setCopied: (v: boolean) => void }) {
   return (
     <div className="flex flex-col items-center gap-3 rounded-lg border border-border bg-muted/40 p-5 text-center">
-      <div className="grid size-36 place-items-center rounded-lg border border-border bg-card">
-        <QrCode className="size-24 text-foreground" />
+      <div className="grid size-36 place-items-center rounded-lg border border-border bg-card p-2">
+        <img
+          src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(PIX_KEY)}`}
+          alt="QR Code Pix"
+          className="size-full object-contain"
+        />
       </div>
       <p className="text-xs text-muted-foreground">
         QR Code demonstrativo. Copie a chave Pix abaixo para simular o pagamento.
